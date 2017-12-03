@@ -14,14 +14,14 @@
 			    cursor: pointer;
 			    width: auto;
 			}
-			#buildProgressTable th, #buildProgressTable td {
+			#orderProgressTable th, #orderProgressTable td {
 			  text-align: left;
 			  padding: 12px;
 			}
-			#buildProgressTable tr {
+			#orderProgressTable tr {
 			  border-bottom: 1px solid #ddd;
 			}
-			#buildProgressTable {
+			#orderProgressTable {
 				border-collapse: collapse;
 				width: 100%;
 				font-size: 18px;
@@ -29,6 +29,9 @@
 				padding: 0;
 				margin: 0;
 				table-layout: fixed;
+			}
+			#orderProgressTable tr:hover:not(.header) {
+				background-color: #eee;
 			}
 		</style>
 	</head>
@@ -57,8 +60,8 @@
 			<fieldset id="field2">
 				<legend>Part List:</legend>				
 								
-				<table id="buildProgressTable">
-				<tr>
+				<table id="orderProgressTable">
+				<tr class="header">
 					<th style="width:30%;">OrderID</th>
 					<th style="width:40%;">PartName</th>
 					<th style="width:30%;">Status</th>
@@ -72,14 +75,20 @@
 					if (buildList != null && buildList.size() > 0) {
 						for (int i = 0; i < buildList.size(); i++) {
 							String order_ID = buildList.get(i).get_orderID();
-							String order_Status = buildList.get(i).get_partID();
-							String part_Name = buildList.get(i).get_status(); 
+							String part_Name = buildList.get(i).get_partID();
+							String order_Status = buildList.get(i).get_status(); 
 							
 							if (order_ID.equals(orderID)) {
 								out.write("<tr>");
 								out.write("<td>" + order_ID + "</td>");
 								out.write("<td>" + part_Name + "</td>");
-								out.write("<td>" + order_Status + "</td>");
+								if (order_Status.equals("F")){
+									out.write("<td style=\"color:red\">" + order_Status + "</td>");
+								}
+								else{
+									out.write("<td style=\"color:green\">" + order_Status + "</td>");
+								}
+
 								out.write("</tr>");
 							}
 						}
@@ -88,21 +97,42 @@
 					dbc.disconnect();
 				%>
 				</table>
-				<script>		
+				<script>
+					//var table = document.querySelector('orderProgressTable');
+					function addRowHandlers() {
+						var rows = document.getElementById("orderProgressTable").rows;
+						for (i = 0; i < rows.length; i++) {
+							rows[i].onclick = function(){ 
+								return function(){
+									if (i != 0){
+										if (this.cells[2].innerHTML = "F"){
+											this.cells[2].innerHTML = "T";
+											this.cells[2].style.color = "green";
+										}
+									}
+								};
+							}(rows[i]);
+						}
+					}
+					window.onload = addRowHandlers();			
 				</script>	
 	
 			</fieldset>
-
-			<button type="submit" id="submitBtn" name="submitBtn"> Comfirm Update</button>
+			
+			<button type="submit" id="submitUndoBtn" name="submitUndoBtn"> Undo Update</button>
+			<button type="submit" id="submitConfirmBtn" name="submitConfirmBtn"> Comfirm Update</button>
 		</form>
 	</center>
 	</div>
 
 	
 	<%	
-	if (request.getParameter("submitBtn") == null){
-		return;
-	}
+		if (request.getParameter("submitConfirmBtn") == null && request.getParameter("submitUndoBtn") == null){
+			return;
+		}
+		if (request.getParameter("submitUndoBtn") != null){
+			return;
+		}
 	
 	%>
 	

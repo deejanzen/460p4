@@ -121,11 +121,11 @@ public class DBController {
 		return null;		
 	}
 	
-		// List all the build in the Build Table
+	// List all the build in the Build Table
 	public ArrayList<buildRecord> show_all_build() {
 		ArrayList<buildRecord> build_list = new ArrayList<buildRecord>();
 		String listAllBuildQueryStr = ""
-									+ "SELECT ORDERNO, INSTALL, PARTNAME "
+									+ "SELECT ORDERNO, PARTNAME, INSTALL "
 									+ "FROM (yuanma.Build "
 									+ "LEFT JOIN yuanma.Part "
 									+ "ON yuanma.Build.PARTNO=yuanma.Part.PARTNO)";
@@ -141,6 +141,9 @@ public class DBController {
 			e.printStackTrace();
 		}
 		return null;		
+	}
+	
+	public void updateOrderProgress(String orderID, String partName, String status){
 	}
 	
 }

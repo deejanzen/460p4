@@ -148,7 +148,7 @@
 				}
 				
 				// get a reference to the table
-				var table = document.querySelector('shipOrderTable');
+				//var table = document.querySelector('shipOrderTable');
 				function addRowHandlers() {
 					var rows = document.getElementById("shipOrderTable").rows;
 					for (i = 0; i < rows.length; i++) {
