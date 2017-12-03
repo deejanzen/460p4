@@ -1,0 +1,128 @@
+Dec 03, 2017 11:54:10 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 03, 2017 11:54:10 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+Dec 03, 2017 11:54:11 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 03, 2017 11:54:11 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 03, 2017 11:57:06 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 03, 2017 11:57:06 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 03, 2017 11:58:13 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 03, 2017 11:58:13 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+Dec 03, 2017 12:00:06 PM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 03, 2017 12:00:06 PM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 03, 2017 12:05:54 PM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 03, 2017 12:05:54 PM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+Dec 03, 2017 12:09:58 PM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 03, 2017 12:09:58 PM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+Dec 03, 2017 12:10:00 PM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 03, 2017 12:10:00 PM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 03, 2017 12:10:12 PM org.apache.catalina.core.StandardWrapperValve invoke
+SEVERE: Servlet.service() for servlet jsp threw exception
+org.apache.jasper.JasperException: Unable to compile class for JSP
+
+Generated servlet error:
+Only a type can be imported. dbController.DBController resolves to a package
+
+Generated servlet error:
+Only a type can be imported. dbController.partRecord resolves to a package
+
+Generated servlet error:
+Only a type can be imported. dbController.deptRecord resolves to a package
+
+An error occurred at line: 68 in the jsp file: /addNewShip.jsp
+Generated servlet error:
+DBController cannot be resolved to a type
+
+An error occurred at line: 68 in the jsp file: /addNewShip.jsp
+Generated servlet error:
+DBController cannot be resolved to a type
+
+An error occurred at line: 68 in the jsp file: /addNewShip.jsp
+Generated servlet error:
+partRecord cannot be resolved to a type
+
+
+	at org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:85)
+	at org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:329)
+	at org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:415)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:308)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:286)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:273)
+	at org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:566)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:314)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:320)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:266)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:228)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:175)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:212)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:818)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:624)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:445)
+	at java.lang.Thread.run(Thread.java:724)
+
+Dec 03, 2017 12:10:20 PM org.apache.catalina.core.StandardWrapperValve invoke
+SEVERE: Servlet.service() for servlet jsp threw exception
+org.apache.jasper.JasperException: Unable to compile class for JSP
+
+Generated servlet error:
+Only a type can be imported. dbController.DBController resolves to a package
+
+Generated servlet error:
+Only a type can be imported. dbController.partRecord resolves to a package
+
+Generated servlet error:
+Only a type can be imported. dbController.deptRecord resolves to a package
+
+
+	at org.apache.jasper.compiler.DefaultErrorHandler.javacError(DefaultErrorHandler.java:85)
+	at org.apache.jasper.compiler.ErrorDispatcher.javacError(ErrorDispatcher.java:329)
+	at org.apache.jasper.compiler.JDTCompiler.generateClass(JDTCompiler.java:415)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:308)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:286)
+	at org.apache.jasper.compiler.Compiler.compile(Compiler.java:273)
+	at org.apache.jasper.JspCompilationContext.compile(JspCompilationContext.java:566)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:314)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:320)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:266)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:228)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:175)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:212)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:818)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:624)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:445)
+	at java.lang.Thread.run(Thread.java:724)
+
+Dec 03, 2017 12:11:27 PM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 03, 2017 12:11:27 PM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 03, 2017 12:13:16 PM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 03, 2017 12:13:16 PM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()

@@ -1,0 +1,100 @@
+Dec 01, 2017 9:41:51 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 01, 2017 9:41:51 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+Dec 01, 2017 9:41:52 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 01, 2017 9:41:52 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 01, 2017 10:21:24 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 01, 2017 10:21:24 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 01, 2017 10:34:05 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 01, 2017 10:34:05 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+Dec 01, 2017 10:42:41 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 01, 2017 10:42:41 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
+Dec 01, 2017 10:44:29 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextInitialized()
+Dec 01, 2017 10:44:29 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextInitialized()
+Dec 01, 2017 10:44:47 AM org.apache.catalina.core.StandardWrapperValve invoke
+SEVERE: Servlet.service() for servlet jsp threw exception
+java.lang.NullPointerException
+	at dbController.DatabaseController.FindAllProducts(DatabaseController.java:98)
+	at org.apache.jsp.welcome_jsp._jspService(welcome_jsp.java:104)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:98)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:390)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:320)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:266)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:228)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:175)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:212)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:818)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:624)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:445)
+	at java.lang.Thread.run(Thread.java:724)
+
+Dec 01, 2017 10:49:04 AM org.apache.catalina.core.StandardWrapperValve invoke
+SEVERE: Servlet.service() for servlet jsp threw exception
+java.lang.NullPointerException
+	at dbController.DatabaseController.FindAllProducts(DatabaseController.java:98)
+	at org.apache.jsp.welcome_jsp._jspService(welcome_jsp.java:104)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:98)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:390)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:320)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:266)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:228)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:175)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:212)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:818)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:624)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:445)
+	at java.lang.Thread.run(Thread.java:724)
+
+Dec 01, 2017 10:49:13 AM org.apache.catalina.core.StandardWrapperValve invoke
+SEVERE: Servlet.service() for servlet jsp threw exception
+java.lang.NullPointerException
+	at dbController.DatabaseController.FindAllProducts(DatabaseController.java:98)
+	at org.apache.jsp.welcome_jsp._jspService(welcome_jsp.java:104)
+	at org.apache.jasper.runtime.HttpJspBase.service(HttpJspBase.java:98)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.jasper.servlet.JspServletWrapper.service(JspServletWrapper.java:390)
+	at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:320)
+	at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:266)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:803)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:290)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:206)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:228)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:175)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:128)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:105)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:109)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:212)
+	at org.apache.coyote.http11.Http11Processor.process(Http11Processor.java:818)
+	at org.apache.coyote.http11.Http11Protocol$Http11ConnectionHandler.process(Http11Protocol.java:624)
+	at org.apache.tomcat.util.net.JIoEndpoint$Worker.run(JIoEndpoint.java:445)
+	at java.lang.Thread.run(Thread.java:724)
+
+Dec 01, 2017 10:49:30 AM org.apache.catalina.core.ApplicationContext log
+INFO: SessionListener: contextDestroyed()
+Dec 01, 2017 10:49:30 AM org.apache.catalina.core.ApplicationContext log
+INFO: ContextListener: contextDestroyed()
