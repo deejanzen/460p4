@@ -120,5 +120,28 @@ public class DBController {
 		}
 		return null;		
 	}
+	
+		// List all the build in the Build Table
+	public ArrayList<buildRecord> show_all_build() {
+		ArrayList<buildRecord> build_list = new ArrayList<buildRecord>();
+		String listAllBuildQueryStr = ""
+									+ "SELECT ORDERNO, INSTALL, PARTNAME "
+									+ "FROM (yuanma.Build "
+									+ "LEFT JOIN yuanma.Part "
+									+ "ON yuanma.Build.PARTNO=yuanma.Part.PARTNO)";
+		try {
+			ResultSet rs = stmt.executeQuery(listAllBuildQueryStr);
+			while(rs.next()){
+				build_list.add(new buildRecord(rs.getString(1), rs.getString(2), rs.getString(3)));
+			}
+			rs.close();
+			return build_list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+	}
+	
 }
 	
