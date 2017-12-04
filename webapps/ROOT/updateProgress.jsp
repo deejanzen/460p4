@@ -191,15 +191,16 @@
 				//out.println("</script>");
 			}
 			
-			//out.println("<script type=\"text/javascript\">");
-			//out.println("alert('" + status + "');");
-			//out.println("location='updateProgress.jsp';");
-			//out.println("</script>");
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Update Completed =)');");
+			out.println("location='updateProgress.jsp';");
+			out.println("</script>");
 			
 			//session.invalidate(); 
 			dbc.disconnect();
+			return;
 		}
-		//session.invalidate(); 
+		session.invalidate(); 
 		//dbc.disconnect();
 	%>
 	

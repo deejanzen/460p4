@@ -95,6 +95,12 @@
 				<h3>Enter Ship Name: 
 					<input type="text" name="shipName" id="shipName" value="" onkeypress="this.style.width = ((this.value.length + 2) * 8) + 'px';">
 				</h3>
+				
+				<br>
+				
+				<h3>Enter Ship Labor Fee: 
+					<input type="text" name="shipLaborFee" id="shipLaborFee" value="" onkeypress="this.style.width = ((this.value.length + 2) * 8) + 'px';">
+				</h3>
 			</fieldset>
 			
 			
@@ -201,22 +207,75 @@
 
 	// Check If the deptName is already in the database
 	int rtn = dbc.verify_department(deptName);
-	
+	dbc.disconnect();
 	if(rtn == 1){
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('The Department is Already Exist');");
 		out.println("location='addNewShip.jsp';");
 		out.println("</script>");
-		dbc.disconnect();
 		return;
 	}
 	
-	
-	dbc.disconnect();
-	
+	if (deptName == ""){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Department Name Cannot Be Empty');");
+		out.println("location='addNewShip.jsp';");
+		out.println("</script>");
+		return;
+	}
+		
+	// Check the Number of Feature Parts
 	String[] partArr = request.getParameterValues("partsSelect");
-	String shipName = request.getParameter("shipName");	
+	if (partArr == null || partArr.length > 10 || partArr.length < 3 ) {
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('You Need to Choose 3-10 Feature Parts');");
+		out.println("location='addNewShip.jsp';");
+		out.println("</script>");
+		return;
+	}
 	
+	//out.println("<script type=\"text/javascript\">");
+	//out.println("alert('" + partArr.length + "');");
+	//out.println("location='addNewShip.jsp';");
+	//out.println("</script>");
+	
+	String shipName = request.getParameter("shipName");	
+	if (shipName == ""){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Ship Name Cannot Be Empty');");
+		out.println("location='addNewShip.jsp';");
+		out.println("</script>");
+		return;
+	}	
+	
+	String shipLaborFee = request.getParameter("shipLaborFee");
+	if (shipLaborFee == ""){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The shipLaborFee Cannot Be Empty');");
+		out.println("location='addNewShip.jsp';");
+		out.println("</script>");
+		return;
+	}
+	dbc.connect();
+	if (!dbc.isInteger(shipLaborFee)){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Ship LaborFee Must Be An Integer');");
+		out.println("location='addNewShip.jsp';");
+		out.println("</script>");
+		dbc.disconnect();
+		return;
+	}	
+	//out.println("<script type=\"text/javascript\">");
+	//out.println("alert(' yea ');");
+	//out.println("location='addNewShip.jsp';");
+	//out.println("</script>");
+	
+	int result = dbc.addNewShipToDept(deptName, partArr, shipName, shipLaborFee);
+	out.println("<script type=\"text/javascript\">");
+	out.println("alert('" + result + "');");
+	out.println("location='addNewShip.jsp';");
+	out.println("</script>");
+	dbc.disconnect();
 	%>
 
 	
