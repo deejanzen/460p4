@@ -51,6 +51,7 @@
 					
 					String orderID = session.getAttribute("orderIDforUpdate").toString();		
 					out.write(orderID);
+					System.out.println("testprint");
 				%>
 				</h3>
 			</fieldset>
@@ -59,36 +60,47 @@
 			
 			<fieldset id="field2">
 				<legend>Part List:</legend>				
-								
 				<table id="orderProgressTable">
 				<tr class="header">
-					<th style="width:30%;">OrderID</th>
-					<th style="width:40%;">PartName</th>
-					<th style="width:30%;">Status</th>
+					<th style="width:60%;">PartName</th>
+					<th style="width:40%;">Status</th>
 				</tr>		
 				<%				
 					DBController dbc = new DBController();
 					dbc.connect();
 					
 					ArrayList<buildRecord> buildList = dbc.show_all_build();
-					
+					int orderPartCount = 1;
+										
 					if (buildList != null && buildList.size() > 0) {
 						for (int i = 0; i < buildList.size(); i++) {
-							String order_ID = buildList.get(i).get_orderID();
-							String part_Name = buildList.get(i).get_partID();
+							String part_Name = buildList.get(i).get_partName();
+							String part_ID = buildList.get(i).get_partID();
 							String order_Status = buildList.get(i).get_status(); 
+							String order_ID = buildList.get(i).get_orderID();
 							
 							if (order_ID.equals(orderID)) {
+								
+								String partID_Hidden = "";
+								String status_Hidden = "";				
+								
 								out.write("<tr>");
-								out.write("<td>" + order_ID + "</td>");
 								out.write("<td>" + part_Name + "</td>");
+								
+								partID_Hidden = orderPartCount + "0";
+								out.write("<input type='hidden' name='" + partID_Hidden + "' id='" + partID_Hidden + "' value='" + part_ID + "'/>");
+																
 								if (order_Status.equals("F")){
-									out.write("<td style=\"color:red\">" + order_Status + "</td>");
+									out.write("<td style='color:red'>" + order_Status + "</td>");
 								}
-								else{
-									out.write("<td style=\"color:green\">" + order_Status + "</td>");
-								}
+								else{									
+									out.write("<td style='color:green'>" + order_Status + "</td>");
 
+								}
+								status_Hidden = orderPartCount + "1";
+								out.write("<input type='hidden' name='" + status_Hidden + "' id='" + status_Hidden + "' value='" + order_Status + "'/>");
+								
+								orderPartCount++;
 								out.write("</tr>");
 							}
 						}
@@ -105,9 +117,17 @@
 							rows[i].onclick = function(){ 
 								return function(){
 									if (i != 0){
-										if (this.cells[2].innerHTML = "F"){
-											this.cells[2].innerHTML = "T";
-											this.cells[2].style.color = "green";
+										var inputID = this.cells[1].parentNode.rowIndex + "1";
+										//alert(document.getElementById(inputID).value);
+										if (this.cells[1].innerHTML == "F"){
+											this.cells[1].innerHTML = "T";
+											this.cells[1].style.color = "green";
+											document.getElementById(inputID).value = "T";
+										}
+										else{
+											this.cells[1].innerHTML = "F";
+											this.cells[1].style.color = "red";
+											document.getElementById(inputID).value = "F";
 										}
 									}
 								};
@@ -130,10 +150,57 @@
 		if (request.getParameter("submitConfirmBtn") == null && request.getParameter("submitUndoBtn") == null){
 			return;
 		}
-		if (request.getParameter("submitUndoBtn") != null){
+		if (request.getParameter("submitUndoBtn") != null){	
 			return;
 		}
-	
+		if (request.getParameter("submitConfirmBtn") != null){	
+		
+			String partID_name = "";
+			String status_name = "";
+			String partID = "";
+			String status = "";
+			dbc.connect();
+			
+			//int i = 1;
+			
+			for (int i = 1; i <= orderPartCount; i++){
+				String prefix = String.valueOf(i);
+				partID_name = prefix + "0";
+				status_name = prefix + "1";
+
+				//out.println("<script type=\"text/javascript\">");
+				//out.println("alert('" + status_name + "');");
+				//out.println("location='updateProgress.jsp';");
+				//out.println("</script>");
+
+				partID = request.getParameter(partID_name);
+				status = request.getParameter(status_name);
+				
+				//out.println("<script type=\"text/javascript\">");
+				//out.println("alert('" + partID + "');");
+				//out.println("location='updateProgress.jsp';");
+				//out.println("</script>");
+
+				
+				//System.out.println(partID + ", " + status);
+				int result = dbc.updateOrderProgress(orderID, partID, status);
+				
+				//out.println("<script type=\"text/javascript\">");
+				//out.println("alert('" + result + "');");
+				//out.println("location='updateProgress.jsp';");
+				//out.println("</script>");
+			}
+			
+			//out.println("<script type=\"text/javascript\">");
+			//out.println("alert('" + status + "');");
+			//out.println("location='updateProgress.jsp';");
+			//out.println("</script>");
+			
+			//session.invalidate(); 
+			dbc.disconnect();
+		}
+		//session.invalidate(); 
+		//dbc.disconnect();
 	%>
 	
 	</body>

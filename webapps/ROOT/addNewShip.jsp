@@ -201,6 +201,7 @@
 
 	// Check If the deptName is already in the database
 	int rtn = dbc.verify_department(deptName);
+	
 	if(rtn == 1){
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('The Department is Already Exist');");
@@ -209,6 +210,8 @@
 		dbc.disconnect();
 		return;
 	}
+	
+	
 	dbc.disconnect();
 	
 	String[] partArr = request.getParameterValues("partsSelect");

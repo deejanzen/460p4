@@ -1,5 +1,6 @@
 package dbController;
 
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -125,14 +126,14 @@ public class DBController {
 	public ArrayList<buildRecord> show_all_build() {
 		ArrayList<buildRecord> build_list = new ArrayList<buildRecord>();
 		String listAllBuildQueryStr = ""
-									+ "SELECT ORDERNO, PARTNAME, INSTALL "
+									+ "SELECT ORDERNO, yuanma.Build.PARTNO, PARTNAME, INSTALL "
 									+ "FROM (yuanma.Build "
 									+ "LEFT JOIN yuanma.Part "
 									+ "ON yuanma.Build.PARTNO=yuanma.Part.PARTNO)";
 		try {
 			ResultSet rs = stmt.executeQuery(listAllBuildQueryStr);
 			while(rs.next()){
-				build_list.add(new buildRecord(rs.getString(1), rs.getString(2), rs.getString(3)));
+				build_list.add(new buildRecord(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
 			}
 			rs.close();
 			return build_list;
@@ -143,7 +144,20 @@ public class DBController {
 		return null;		
 	}
 	
-	public void updateOrderProgress(String orderID, String partName, String status){
+	public int updateOrderProgress(String orderID, String partNo, String status){
+		String updateOrderProgressQueryStr = ""
+											+ "UPDATE yuanma.Build "
+											+ "SET yuanma.Build.INSTALL='" + status + "' "
+											+ "WHERE (yuanma.Build.ORDERNO='" + orderID + "' "
+											+ "AND yuanma.Build.PARTNO='" + partNo + "') ";
+		try {
+			stmt.executeQuery(updateOrderProgressQueryStr);
+			return 0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 1;												
 	}
 	
 }

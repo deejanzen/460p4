@@ -80,8 +80,6 @@
 
 	String partPrice = request.getParameter("partPrice");
 	
-	request.setCharacterEncoding("utf-8");
-	response.setContentType("text/html;charset=utf-8");
 	out.println("<script type=\"text/javascript\">");
 	out.println("alert('PartName: " + partName + "\\nPrice Change From: " + "');");
 	out.println("location='updatePartCost.jsp';");
