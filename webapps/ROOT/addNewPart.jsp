@@ -58,7 +58,19 @@
 	//out.println("location='addNewPart.jsp';");
 	//out.println("</script>");
 	
+	// Check If the partName is already in the database
 	String partName = request.getParameter("partName");
+	dbc.connect();
+	int rtn = dbc.verify_partName(partName);
+	dbc.disconnect();
+	if(rtn == 1){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The PartName is Already Exist');");
+		out.println("location='addNewPart.jsp';");
+		out.println("</script>");
+		return;
+	}
+	
 	// Check if the partName is empty
 	if (partName == ""){
 		out.println("<script type=\"text/javascript\">");
@@ -95,6 +107,7 @@
 
 	dbc.disconnect();
 	%>
+	
 	
 	</body>
 	

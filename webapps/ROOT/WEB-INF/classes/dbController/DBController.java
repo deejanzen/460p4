@@ -254,5 +254,23 @@ public class DBController {
 		
 	}
 	
+	public int getPartPrice(String partName) {
+		String listPartQueryStr = ""
+									+ "SELECT * "
+									+ "FROM yuanma.Part "
+									+ "WHERE yuanma.Part.PARTNAME='" + partName + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(listPartQueryStr);
+			rs.next();
+			int curPrice = rs.getInt(3);
+			rs.close();
+			return curPrice;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;	
+	}
+	
 }
 	

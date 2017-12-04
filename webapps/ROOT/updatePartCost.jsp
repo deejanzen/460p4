@@ -34,7 +34,7 @@
 				<legend>Enter Information:</legend>				
 				<h3>Choose Part:
 					  <select class="bloc" name="partSelect" id="partSelect" 
-						      onfocus='this.size=5;' onblur='this.size=1;' 
+						      onfocus='this.size=8;' onblur='this.size=1;' 
 						      onchange='this.size=1; this.blur();'>
 						<%
 							request.setCharacterEncoding("utf-8");
@@ -76,12 +76,35 @@
 		return;
 	}
 	
+	request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html;charset=utf-8");
+		
 	String partName = request.getParameter("partSelect");
 
 	String partPrice = request.getParameter("partPrice");
+	// Check if the partprice is empty
+	if (partPrice == ""){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Part Price Cannot Be Empty');");
+		out.println("location='updatePartCost.jsp';");
+		out.println("</script>");
+		return;
+	}
+	dbc.connect();
+	if (!dbc.isInteger(partPrice)){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Part Price Must Be An Integer');");
+		out.println("location='updatePartCost.jsp';");
+		out.println("</script>");
+		dbc.disconnect();
+		return;
+	}
+	
+	int curPrice = dbc.getPartPrice(partName);
+	dbc.disconnect();
 	
 	out.println("<script type=\"text/javascript\">");
-	out.println("alert('PartName: " + partName + "\\nPrice Change From: " + "');");
+	out.println("alert('PartName: " + partName + "\\nPrice Change From: " + curPrice + " to " + partPrice + "');");
 	out.println("location='updatePartCost.jsp';");
 	out.println("</script>");
 	%>
