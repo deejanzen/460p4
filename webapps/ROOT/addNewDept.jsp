@@ -42,7 +42,8 @@
 	if (request.getParameter("submitBtn") == null){
 		return;
 	}
-	
+
+
 	String deptName = request.getParameter("deptName");
 	
 	%>

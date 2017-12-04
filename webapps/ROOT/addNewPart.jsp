@@ -45,10 +45,55 @@
 	if (request.getParameter("submitBtn") == null){
 		return;
 	}
+	request.setCharacterEncoding("utf-8");
+	response.setContentType("text/html;charset=utf-8");
+	
+
+	DBController dbc = new DBController();
+	
+	//String partID_test = dbc.partIDGenerator();
+	
+	//out.println("<script type=\"text/javascript\">");
+	//out.println("alert('" + partID_test + "');");
+	//out.println("location='addNewPart.jsp';");
+	//out.println("</script>");
 	
 	String partName = request.getParameter("partName");
-	String partPrice = request.getParameter("partPrice");
+	// Check if the partName is empty
+	if (partName == ""){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Part Name Cannot Be Empty');");
+		out.println("location='addNewPart.jsp';");
+		out.println("</script>");
+		return;
+	}
 	
+	String partPrice = request.getParameter("partPrice");
+	// Check if the partprice is empty
+	if (partPrice == ""){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Part Price Cannot Be Empty');");
+		out.println("location='addNewPart.jsp';");
+		out.println("</script>");
+		return;
+	}
+	dbc.connect();
+	if (!dbc.isInteger(partPrice)){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Part Price Must Be An Integer');");
+		out.println("location='addNewPart.jsp';");
+		out.println("</script>");
+		dbc.disconnect();
+		return;
+	}
+	
+	int result = dbc.addNewPart(partName, partPrice);
+	out.println("<script type=\"text/javascript\">");
+	out.println("alert('" + result + "');");
+	out.println("location='addNewPart.jsp';");
+	out.println("</script>");
+
+	dbc.disconnect();
 	%>
 	
 	</body>

@@ -148,7 +148,7 @@
 				}
 				
 				// get a reference to the table
-				var table = document.querySelector('shipOrderTable');
+				//var table = document.querySelector('shipOrderTable');
 				function addRowHandlers() {
 					var rows = document.getElementById("shipOrderTable").rows;
 					for (i = 0; i < rows.length; i++) {
@@ -177,34 +177,34 @@
 
 	
 	<%	
-	if (request.getParameter("submitScrapBtn") == null && request.getParameter("submitUpdateBtn") == null){
-		return;
-	}
-	
-	String orderID = request.getParameter("orderID");
-		
-	request.setCharacterEncoding("utf-8");
-	response.setContentType("text/html;charset=utf-8");
-	
-	if (request.getParameter("submitScrapBtn") != null) {
-		out.println("<script type=\"text/javascript\">");
-		out.println("location='updateShipStatus.jsp';");
-		out.println("</script>");
-	}
-	else if (request.getParameter("submitUpdateBtn") != null) {
-		if (!orderID.equals("")){
-			session.setAttribute("orderIDforUpdate",orderID);
-			out.println("<script type=\"text/javascript\">");
-			out.println("window.open('updateProgress.jsp');");
-			out.println("</script>");
+		if (request.getParameter("submitScrapBtn") == null && request.getParameter("submitUpdateBtn") == null){
+			return;
 		}
-		else{
+		
+		String orderID = request.getParameter("orderID");
+			
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf-8");
+		
+		if (request.getParameter("submitScrapBtn") != null) {
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please Select An Order To Update');");
 			out.println("location='updateShipStatus.jsp';");
 			out.println("</script>");
 		}
-	}
+		else if (request.getParameter("submitUpdateBtn") != null) {
+			if (!orderID.equals("")){
+				session.setAttribute("orderIDforUpdate",orderID);
+				out.println("<script type=\"text/javascript\">");
+				out.println("window.open('updateProgress.jsp');");
+				out.println("</script>");
+			}
+			else{
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Please Select An Order To Update');");
+				out.println("location='updateShipStatus.jsp';");
+				out.println("</script>");
+			}
+		}
 	%>
 	
 	</body>

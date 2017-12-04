@@ -1,5 +1,6 @@
 package dbController;
 
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -82,7 +83,28 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 1;
+		return -1;
+	}
+	
+	// method to verify if the partname is exist
+	public int verify_partName(String newPartName){
+		String listPartQueryStr = ""
+								+ "SELECT COUNT(1) "
+								+ "FROM yuanma.Part "
+								+ "WHERE Partname ='" + newPartName + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(listPartQueryStr);
+			// Check if the partName exist
+			rs.next();
+			int count = rs.getInt(1);
+			rs.close();
+			return count;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	
 	// List all the parts available in Part Table
@@ -120,5 +142,117 @@ public class DBController {
 		}
 		return null;		
 	}
+	
+	// List all the build in the Build Table
+	public ArrayList<buildRecord> show_all_build() {
+		ArrayList<buildRecord> build_list = new ArrayList<buildRecord>();
+		String listAllBuildQueryStr = ""
+									+ "SELECT ORDERNO, yuanma.Build.PARTNO, PARTNAME, INSTALL "
+									+ "FROM (yuanma.Build "
+									+ "LEFT JOIN yuanma.Part "
+									+ "ON yuanma.Build.PARTNO=yuanma.Part.PARTNO)";
+		try {
+			ResultSet rs = stmt.executeQuery(listAllBuildQueryStr);
+			while(rs.next()){
+				build_list.add(new buildRecord(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+			rs.close();
+			return build_list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+	}
+	
+	public int updateOrderProgress(String orderID, String partNo, String status){
+		String updateOrderProgressQueryStr = ""
+											+ "UPDATE yuanma.Build "
+											+ "SET yuanma.Build.INSTALL='" + status + "' "
+											+ "WHERE (yuanma.Build.ORDERNO='" + orderID + "' "
+											+ "AND yuanma.Build.PARTNO='" + partNo + "') ";
+		try {
+			stmt.executeQuery(updateOrderProgressQueryStr);
+			return 0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 1;												
+	}
+	
+	public int addNewShipToDept(String deptName, String[] partArr, String shipName, String laborFee){
+		String addNewShipQueryStr = ""
+									+ "INSERT INTO yuanma.Department "
+									+ "VALUES ('" + deptName + "', '" + shipName + "', '" + laborFee + "')";
+		try {
+			stmt.executeQuery(addNewShipQueryStr);
+			return 0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return -1;												
+	}
+
+	public static boolean isInteger(String s) {
+		return s.matches("\\d+");
+	}	
+	
+	public int addNewPart(String partName, String partPrice) {
+		// generate the id
+		String partID = partIDGenerator();
+		
+		String addNewPartQueryStr = ""
+									+ "INSERT INTO yuanma.Part "
+									+ "VALUES ('" + partID + "', '" + partName + "', '" + partPrice + "')";
+		try {
+			stmt.executeQuery(addNewPartQueryStr);
+			return 0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return -1;												
+	}
+	
+	public String partIDGenerator() {
+		// get the part list
+		ArrayList<partRecord> part_list = show_all_part();
+		int maxID_int = 0;
+		
+		// find the largest part id
+		for (int i = 0; i < part_list.size(); i ++) {
+			// extract the part ID from the record
+			partRecord record = part_list.get(i);
+			String partID = record.get_partID();
+			
+			// get the number part
+			//String partID_prefix = partID.substring(0, 3);
+			String partID_num = partID.substring(3);
+			
+			// convert number part to int
+			int partID_int  = Integer.parseInt(partID_num);
+			
+			// compare
+			if (partID_int > maxID_int) {
+				maxID_int = partID_int;
+			}
+		}
+		
+		// convert the int into string
+		String maxID_num = String.format("%04d", maxID_int + 1);
+		
+		// add prefix
+		String maxPartID = "PRT" + maxID_num;
+		
+		return maxPartID;
+		
+	}
+	
 }
 	

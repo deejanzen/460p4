@@ -1,0 +1,11 @@
+index	->	customer	->	add order
+						->	check contract
+		
+		->	manager		->	update database		->	add ship
+												->	add department
+												->	add parts
+												->	update item cost
+						
+						->	update progress		->	update ship building progress
+												->	scrap a ship/cancel order
+
