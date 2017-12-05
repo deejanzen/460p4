@@ -101,6 +101,7 @@
 	}
 	
 	int curPrice = dbc.getPartPrice(partName);
+	int result = dbc.updatePartPrice(partName, partPrice);
 	dbc.disconnect();
 	
 	out.println("<script type=\"text/javascript\">");

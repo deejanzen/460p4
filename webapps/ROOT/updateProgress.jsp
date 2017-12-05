@@ -51,7 +51,7 @@
 					
 					String orderID = session.getAttribute("orderIDforUpdate").toString();		
 					out.write(orderID);
-					System.out.println("testprint");
+					//System.out.println("testprint");
 				%>
 				</h3>
 			</fieldset>
@@ -162,6 +162,7 @@
 			dbc.connect();
 			
 			//int i = 1;
+			int curPrice = 0;
 			
 			for (int i = 1; i <= orderPartCount; i++){
 				String prefix = String.valueOf(i);
@@ -183,24 +184,57 @@
 
 				
 				//System.out.println(partID + ", " + status);
-				int result = dbc.updateOrderProgress(orderID, partID, status);
+				
+				
+				dbc.updateOrderProgress(orderID, partID, status);
 				
 				//out.println("<script type=\"text/javascript\">");
-				//out.println("alert('" + result + "');");
+				//out.println("alert('" + status + "');");
+				//out.println("location='updateProgress.jsp';");
+				//out.println("</script>");
+				
+				if("T".equals(status)) {
+					curPrice += dbc.getPartPriceByID(partID);
+				}
+				
+				
+				
+				//out.println("<script type=\"text/javascript\">");
+				//out.println("alert('" + status + "');");
 				//out.println("location='updateProgress.jsp';");
 				//out.println("</script>");
 			}
+						
+			// Check whole order progress
+			int result = dbc.checkOrderProgress(orderID);
+						
+			//out.println("<script type=\"text/javascript\">");
+			//out.println("alert('" + result + "');");
+			//out.println("location='updateProgress.jsp';");
+			//out.println("</script>");
+						
+			int basePrice = dbc.getBasePrice(orderID);
+			curPrice += basePrice;
+
 			
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Update Completed =)');");
-			out.println("location='updateProgress.jsp';");
-			out.println("</script>");
+			if (result == 0) {
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Update Completed All Parts Are Fully Installed');");
+				out.println("location='updateShipStatus.jsp';");
+				out.println("</script>");
+			}
+			else {
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Update Completed \\n Current Construction Price is: " +  curPrice +"');");
+				out.println("location='updateShipStatus.jsp';");
+				out.println("</script>");
+			}
 			
 			//session.invalidate(); 
 			dbc.disconnect();
 			return;
 		}
-		session.invalidate(); 
+		//session.invalidate(); 
 		//dbc.disconnect();
 	%>
 	
