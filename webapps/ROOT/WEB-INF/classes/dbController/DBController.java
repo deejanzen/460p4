@@ -419,10 +419,10 @@ public class DBController {
 		for (int i = 0; i < order_list.size(); i ++) {
 			// extract the part ID from the record
 			orderRecord record = order_list.get(i);
-			String partID = record.get_orderID();
+			String orderID = record.get_orderID();
 			
 			// get the number part
-			//String partID_prefix = partID.substring(0, 3);
+			//String orderID_prefix = orderID.substring(0, 3);
 			String orderID_num = orderID.substring(3);
 			
 			// convert number part to int
@@ -446,13 +446,13 @@ public class DBController {
 	
 	public String contrIDGenerator() {
 		// get the part list
-		ArrayList<contrRecord> contr_list = show_all_contr();
+		ArrayList<contractRecord> contr_list = show_all_contract();
 		int maxID_int = 0;
 		
 		// find the largest part id
 		for (int i = 0; i < contr_list.size(); i ++) {
 			// extract the part ID from the record
-			contrRecord record = contr_list.get(i);
+			contractRecord record = contr_list.get(i);
 			String contrID = record.get_contrID();
 			
 			// get the number part
@@ -477,6 +477,101 @@ public class DBController {
 		return maxContrID;
 		
 	}	
+	
+	
+	
+	public int verify_customerID(String custID) {
+		String listCustQueryStr = ""
+								+ "SELECT COUNT(1) "
+								+ "FROM yuanma.Customer "
+								+ "WHERE yuanma.Customer.CustNO='" + custID + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(listCustQueryStr);
+			
+			// Check if the partName exist
+			if (rs.next() == false) {
+				return -1;
+			}
+			int count = rs.getInt(1);
+			rs.close();
+			return count;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public String custIDGenerator() {
+		// get the part list
+		ArrayList<customerRecord> cust_list = show_all_customer();
+		int maxID_int = 0;
+		
+		// find the largest part id
+		for (int i = 0; i < cust_list.size(); i ++) {
+			// extract the part ID from the record
+			customerRecord record = cust_list.get(i);
+			String custID = record.get_custID();
+			
+			// get the number part
+			//String custID_prefix = custID.substring(0, 3);
+			String custID_num = custID.substring(3);
+			
+			// convert number part to int
+			int custID_int  = Integer.parseInt(custID_num);
+			
+			// compare
+			if (custID_int > maxID_int) {
+				maxID_int = custID_int;
+			}
+		}
+		
+		// convert the int into string
+		String maxID_num = String.format("%04d", maxID_int + 1);
+		
+		// add prefix
+		String maxCustID = "CT" + maxID_num;
+		
+		return maxCustID;
+		
+	}
+	
+	// List all the order in the order Table
+	public ArrayList<customerRecord> show_all_customer() {
+		ArrayList<customerRecord> cust_list = new ArrayList<customerRecord>();
+		String listAllCustQueryStr = ""
+									+ "SELECT * "
+									+ "FROM yuanma.Customer";
+		try {
+			ResultSet rs = stmt.executeQuery(listAllCustQueryStr);
+			while(rs.next()){
+				cust_list.add(new customerRecord(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+			rs.close();
+			return cust_list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+	}
+	
+	public int addNewCustomer(String custID, String fname, String lname, String email){
+	
+		String addNewCustomerQueryStr = ""
+									+ "INSERT INTO yuanma.Customer "
+									+ "VALUES ('" + custID + "', '" + fname + "', '" + lname + "', '" + email + "')";
+		try {
+			stmt.executeQuery(addNewCustomerQueryStr);
+			return 0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return -1;			
+	}
 	
 }
 	

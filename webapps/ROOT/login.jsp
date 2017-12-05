@@ -25,7 +25,7 @@
 			<button type="button" onclick="window.location.href='managerPage.jsp'">Manager</button>
 			<br>
 			<br>
-			<button type="button" onclick="window.location.href='customerPage.jsp'">Customer</button>
+			<button type="button" onclick="window.location.href='custLogin.jsp'">Customer</button>
 		</form>
 	</div>
 	<%

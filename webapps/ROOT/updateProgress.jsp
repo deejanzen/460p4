@@ -218,19 +218,20 @@
 
 			
 			if (result == 0) {
+				session.invalidate(); 
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Update Completed All Parts Are Fully Installed');");
 				out.println("location='updateShipStatus.jsp';");
 				out.println("</script>");
 			}
 			else {
+				session.invalidate(); 
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Update Completed \\n Current Construction Price is: " +  curPrice +"');");
 				out.println("location='updateShipStatus.jsp';");
 				out.println("</script>");
 			}
 			
-			//session.invalidate(); 
 			dbc.disconnect();
 			return;
 		}
