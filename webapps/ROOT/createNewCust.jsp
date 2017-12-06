@@ -6,7 +6,7 @@
 <title>Customer Login</title>
 </head>
 <style>
-	#loginbox {
+	#custbox {
 		border: 2px solid black;
 		border-radius: 5px;
 		text-align: center;
@@ -27,9 +27,9 @@
 	}
 </style>
 <body>
-	<h2>Login</h2>
-	<div id="loginbox">
-		<form action="custLogin.jsp" method="post">
+	<h2>I like to:</h2>
+	<div id="custbox">
+		<form action="createNewCust.jsp" method="post">
 			FirstName <input type="text" id="fname" value="" name="fname">
 			<br>
 			LastName <input type="text" id="lname" value="" name="lname">
@@ -48,35 +48,44 @@
 
 	DBController dbc = new DBController();
 
+	String cust_id = "";
 	String cust_fname = request.getParameter("fname");
 	String cust_lname = request.getParameter("lname");
 	String cust_email = request.getParameter("email");
 
-	if (cust_fname != "" && cust_lname != "" && cust_email != ""){
+	if (cust_id != "" && cust_fname != "" && cust_email != ""){
 		// check if the customer id is in the database
 		dbc.connect();
-		if (dbc.verify_customerById(cust_id) != 1){
+		cust_id = dbc.verify_customerByName(cust_fname, cust_lname, cust_email);
+		if (cust_id != ""){
 			dbc.disconnect();
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('This Customer ID Is Not Exist\\nPlease Enter A New CustomerID\\Or You Can Fullfill The Blank Below To Create Your Profile');");
-			out.println("location='createNewCust.jsp';");
+			out.println("alert('Customer information already exist in the database');");
+			out.println("location='customerPage.jsp';");
 			out.println("</script>");
 			return;
 		} else {
-			session.setAttribute("custID",cust_id);
-			response.sendRedirect("customerPage.jsp");
-			return;
-		}
-	}
+			dbc.connect();
+			cust_id = dbc.custIDGenerator();
+			dbc.addNewCustomer(cust_id, cust_fname, cust_lname, cust_email);
 
-	if (cust_fname == "" || cust_lname == "") {
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('You Cannot Leave Your First Name and Last Name Empty If You Are New Customer');");
+			out.println("alert('You Customer ID is: " + cust_id + " \\n(Please Write It Down, Cuz You Won't See This Again In Your Life)');");
 			out.println("location='custLogin.jsp';");
 			out.println("</script>");
-			return;
+
+			dbc.disconnect();
+		}
+		session.setAttribute("custID",cust_id);
+		response.sendRedirect("customerPage.jsp");
+		return;
 	}
-	
+
+	session.setAttribute("custID", cust_id);
+	response.sendRedirect("createNewCust.jsp");
+
+
+
 	%>
 </body>
 </html>

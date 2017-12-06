@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date; 
-import java.util.*; 
+import java.util.Date;
+import java.util.*;
 import java.time.LocalDate;
 
 public class DBController {
@@ -17,11 +17,11 @@ public class DBController {
 	final String oracle_URL ="jdbc:oracle:thin:@aloe.cs.arizona.edu:1521:oracle";
 	Connection connection;
 	Statement stmt;
-	
+
 	public DBController(){
-		
+
 	}
-	
+
 	public void connect(){
 		try {
 		    Class.forName("oracle.jdbc.OracleDriver");
@@ -38,7 +38,7 @@ public class DBController {
 		    System.exit(2);
 		}
 	}
-	
+
 	public void disconnect(){
 		try {
 		      stmt.close();
@@ -48,7 +48,7 @@ public class DBController {
 		    }
 		    connection = null;
 	}
-	
+
 	// List all of the department in the Department Table
 	public ArrayList<deptRecord> show_all_dept() {
 		ArrayList<deptRecord> dept_list = new ArrayList<deptRecord>();
@@ -64,9 +64,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-		
+
 	// method to verify if the department is exist
 	public int verify_department(String newDeptName){
 		String listDeptQueryStr = ""
@@ -87,7 +87,7 @@ public class DBController {
 		}
 		return -1;
 	}
-	
+
 	// method to verify if the partname is exist
 	public int verify_partName(String newPartName){
 		String listPartQueryStr = ""
@@ -108,7 +108,7 @@ public class DBController {
 		}
 		return -1;
 	}
-	
+
 	// List all the parts available in Part Table
 	public ArrayList<partRecord> show_all_part() {
 		ArrayList<partRecord> part_list = new ArrayList<partRecord>();
@@ -124,9 +124,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-	
+
 	// List all the parts available in Part Table	---------------- UNDONE
 	public ArrayList<partRecord> show_available_part(String orderID) {
 		ArrayList<partRecord> part_list = new ArrayList<partRecord>();
@@ -147,9 +147,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-		
+
 	// List all the build in the Build Table
 	public ArrayList<buildRecord> show_all_build() {
 		ArrayList<buildRecord> build_list = new ArrayList<buildRecord>();
@@ -169,9 +169,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-		
+
 	public int updateOrderProgress(String orderID, String partNo, String status){
 		String updateOrderProgressQueryStr = ""
 											+ "UPDATE yuanma.Build "
@@ -185,9 +185,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 1;												
+		return 1;
 	}
-	
+
 	public int checkOrderProgress(String orderID) {
 		// get the corresponding build list
 		ArrayList<buildRecord> build_list = new ArrayList<buildRecord>();
@@ -205,9 +205,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		//return build_list.size();
-		
+
 		// Check if all parts are installed
 
 		for (int i = 0; i < build_list.size(); i++){
@@ -216,7 +216,7 @@ public class DBController {
 			}
 		}
 
-		
+
 		// update the order status in Contract Order Table
 
 		String updateContractOrderStatusQueryStr = ""
@@ -229,11 +229,11 @@ public class DBController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 
 		return -1;
 	}
-	
+
 	public int addNewShipToDept(String deptName, String shipName, String laborFee){
 		String addNewShipQueryStr = ""
 									+ "INSERT INTO yuanma.Department "
@@ -245,19 +245,19 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		return -1;												
+
+
+		return -1;
 	}
 
 	public static boolean isInteger(String s) {
 		return s.matches("\\d+");
-	}	
-	
+	}
+
 	public int addNewPart(String partName, String partPrice) {
 		// generate the id
 		String partID = partIDGenerator();
-		
+
 		String addNewPartQueryStr = ""
 									+ "INSERT INTO yuanma.Part "
 									+ "VALUES ('" + partID + "', '" + partName + "', '" + partPrice + "')";
@@ -268,43 +268,43 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		return -1;												
+
+
+		return -1;
 	}
-	
+
 	public String partIDGenerator() {
 		// get the part list
 		ArrayList<partRecord> part_list = show_all_part();
 		int maxID_int = 0;
-		
+
 		// find the largest part id
 		for (int i = 0; i < part_list.size(); i ++) {
 			// extract the part ID from the record
 			partRecord record = part_list.get(i);
 			String partID = record.get_partID();
-			
+
 			// get the number part
 			//String partID_prefix = partID.substring(0, 3);
 			String partID_num = partID.substring(3);
-			
+
 			// convert number part to int
 			int partID_int  = Integer.parseInt(partID_num);
-			
+
 			// compare
 			if (partID_int > maxID_int) {
 				maxID_int = partID_int;
 			}
 		}
-		
+
 		// convert the int into string
 		String maxID_num = String.format("%04d", maxID_int + 1);
-		
+
 		// add prefix
 		String maxPartID = "PRT" + maxID_num;
-		
+
 		return maxPartID;
-		
+
 	}
 
 	public int getPartPriceByID(String partID) {
@@ -322,9 +322,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;	
-	}	
-	
+		return -1;
+	}
+
 	public int getPartPrice(String partName) {
 		String listPartQueryStr = ""
 									+ "SELECT * "
@@ -340,10 +340,10 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;	
+		return -1;
 	}
-	
-		
+
+
 	public ArrayList<partRecord> show_all_part_byModelName(String modelName) {
 		ArrayList<partRecord> part_list = new ArrayList<partRecord>();
 		String listPartQueryStr = ""
@@ -363,16 +363,16 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;	
+		return null;
 	}
-	
+
 	public int getBasePrice(String orderID) {
 		String getBasePriceQueryStr = ""
 									+ "SELECT yuanma.Department.BasePrice "
 									+ "FROM (yuanma.Department "
 									+ "JOIN yuanma.ContractOrder "
 									+ "ON yuanma.Department.deptName=yuanma.ContractOrder.deptName) "
-									+ "WHERE yuanma.ContractOrder.orderNo='" + orderID + "'"; 
+									+ "WHERE yuanma.ContractOrder.orderNo='" + orderID + "'";
 		try {
 			ResultSet rs = stmt.executeQuery(getBasePriceQueryStr);
 			rs.next();
@@ -383,14 +383,14 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;	
+		return -1;
 	}
-	
+
 	public int updatePartPrice(String partName, String partPrice) {
 		String updatePartPriceQueryStr = ""
 										+ "UPDATE yuanma.Part "
 										+ "SET yuanma.Part.PRICE='" + partPrice + "' "
-										+ "WHERE yuanma.Part.PARTNAME='" + partName + "'"; 
+										+ "WHERE yuanma.Part.PARTNAME='" + partName + "'";
 		try {
 			stmt.executeQuery(updatePartPriceQueryStr);
 			return 0;
@@ -398,9 +398,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;	
+		return -1;
 	}
-	
+
 	// List all the contract in the contract Table
 	public ArrayList<contractRecord> show_all_contract() {
 		ArrayList<contractRecord> contr_list = new ArrayList<contractRecord>();
@@ -418,9 +418,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-	
+
 	// List all the order in the order Table
 	public ArrayList<orderRecord> show_all_order() {
 		ArrayList<orderRecord> order_list = new ArrayList<orderRecord>();
@@ -438,87 +438,87 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-	
+
 	public String orderIDGenerator() {
 		// get the part list
 		ArrayList<orderRecord> order_list = show_all_order();
 		int maxID_int = 0;
-		
+
 		// find the largest part id
 		for (int i = 0; i < order_list.size(); i ++) {
 			// extract the part ID from the record
 			orderRecord record = order_list.get(i);
 			String orderID = record.get_orderID();
-			
+
 			// get the number part
 			//String orderID_prefix = orderID.substring(0, 3);
 			String orderID_num = orderID.substring(3);
-			
+
 			// convert number part to int
 			int orderID_int  = Integer.parseInt(orderID_num);
-			
+
 			// compare
 			if (orderID_int > maxID_int) {
 				maxID_int = orderID_int;
 			}
 		}
-		
+
 		// convert the int into string
 		String maxID_num = String.format("%04d", maxID_int + 1);
-		
+
 		// add prefix
 		String maxOrderID = "ORD" + maxID_num;
-		
+
 		return maxOrderID;
-		
+
 	}
-	
+
 	public String contrIDGenerator() {
 		// get the part list
 		ArrayList<contractRecord> contr_list = show_all_contract();
 		int maxID_int = 0;
-		
+
 		// find the largest part id
 		for (int i = 0; i < contr_list.size(); i ++) {
 			// extract the part ID from the record
 			contractRecord record = contr_list.get(i);
 			String contrID = record.get_contrID();
-			
+
 			// get the number part
 			//String contrID_prefix = contrID.substring(0, 3);
 			String contrID_num = contrID.substring(3);
-			
+
 			// convert number part to int
 			int contrID_int  = Integer.parseInt(contrID_num);
-			
+
 			// compare
 			if (contrID_int > maxID_int) {
 				maxID_int = contrID_int;
 			}
 		}
-		
+
 		// convert the int into string
 		String maxID_num = String.format("%04d", maxID_int + 1);
-		
+
 		// add prefix
 		String maxContrID = "CTR" + maxID_num;
-		
+
 		return maxContrID;
-		
-	}	
-	
-	
-	
-	public int verify_customerID(String custID) {
+
+	}
+
+
+
+	public int verify_customerById(String custID) {
 		String listCustQueryStr = ""
 								+ "SELECT COUNT(1) "
 								+ "FROM yuanma.Customer "
 								+ "WHERE yuanma.Customer.CustNO='" + custID + "'";
 		try {
 			ResultSet rs = stmt.executeQuery(listCustQueryStr);
-			
+
 			// Check if the partName exist
 			if (rs.next() == false) {
 				return -1;
@@ -533,41 +533,66 @@ public class DBController {
 		}
 		return -1;
 	}
-	
+
+	public String verify_customerByName(String fn, String ln, String em) {
+		String listCustQueryStr = ""
+								+ "SELECT custNo "
+								+ "FROM yuanma.Customer "
+								+ "WHERE yuanma.Customer.firstName='" + fn + "'"
+								+ "AND yuanma.Customer.lastName='" + ln + "'"
+								+ "AND yuanma.Customer.email='" + em + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(listCustQueryStr);
+
+			// Check if the partName exist
+			if (rs.next() == false) {
+				return "";
+			}
+			String cId = rs.getString("custNo");
+			rs.close();
+			return cId;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	public String custIDGenerator() {
 		// get the part list
 		ArrayList<customerRecord> cust_list = show_all_customer();
 		int maxID_int = 0;
-		
+
 		// find the largest part id
 		for (int i = 0; i < cust_list.size(); i ++) {
 			// extract the part ID from the record
 			customerRecord record = cust_list.get(i);
 			String custID = record.get_custID();
-			
+
 			// get the number part
 			//String custID_prefix = custID.substring(0, 3);
 			String custID_num = custID.substring(3);
-			
+
 			// convert number part to int
 			int custID_int  = Integer.parseInt(custID_num);
-			
+
 			// compare
 			if (custID_int > maxID_int) {
 				maxID_int = custID_int;
 			}
 		}
-		
+
 		// convert the int into string
 		String maxID_num = String.format("%04d", maxID_int + 1);
-		
+
 		// add prefix
 		String maxCustID = "CT" + maxID_num;
-		
+
 		return maxCustID;
-		
+
 	}
-	
+
 	// List all the order in the order Table
 	public ArrayList<customerRecord> show_all_customer() {
 		ArrayList<customerRecord> cust_list = new ArrayList<customerRecord>();
@@ -585,11 +610,11 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-	
+
 	public int addNewCustomer(String custID, String fname, String lname, String email){
-	
+
 		String addNewCustomerQueryStr = ""
 									+ "INSERT INTO yuanma.Customer "
 									+ "VALUES ('" + custID + "', '" + fname + "', '" + lname + "', '" + email + "')";
@@ -600,10 +625,10 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return -1;			
+
+		return -1;
 	}
-	
+
 	// List all the contract in the contract Table
 	public ArrayList<contractRecord> show_all_contractByCustID(String custID) {
 		ArrayList<contractRecord> contr_list = new ArrayList<contractRecord>();
@@ -622,9 +647,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
+		return null;
 	}
-	
+
 	// List all the contract in the contract Table
 	public ArrayList<orderRecord> show_all_orderByContract(String contrID) {
 		ArrayList<orderRecord> order_list = new ArrayList<orderRecord>();
@@ -643,9 +668,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;		
-	}	
-	
+		return null;
+	}
+
 	public int getBasePriceByName(String shipName) {
 		String getBasePriceQueryStr = ""
 									+ "SELECT yuanma.Department.BasePrice "
@@ -661,14 +686,14 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;	
+		return -1;
 	}
-		
+
 	public int addNewContract(String contrID, String custID){
 		Date d = new Date();
 		String[] a = d.toString().split(" ");
 		String date = a[5] + "/" + a[1] + "/" + a[2];
-		
+
 		String addNewContrQueryStr = ""
 									+ "INSERT INTO yuanma.Contract "
 									+ "VALUES ('" + contrID + "', TO_DATE('" + date + "', 'yyyy/mm/dd'), '" + custID + "')";
@@ -681,7 +706,7 @@ public class DBController {
 		}
 		return -1;
 	}
-	
+
 	public int addNewContractOrder(String orderID, String contrID, String shipName){
 		// get the department name by ship name
 		String getDeptByShip = "SELECT yuanma.Department.DeptName FROM yuanma.Department WHERE yuanma.Department.Model='" + shipName + "'";
@@ -691,12 +716,12 @@ public class DBController {
 			rs.next();
 			deptName = rs.getString(1);
 			rs.close();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		String addNewContrOrderQueryStr = ""
 									+ "INSERT INTO yuanma.ContractOrder "
 									+ "VALUES ('" + orderID + "', '" + contrID + "', '" + deptName + "', 'Active')";
@@ -709,7 +734,7 @@ public class DBController {
 		}
 		return -1;
 	}
-	
+
 	public String getPartIDByName(String partName) {
 		String getPartIDQueryStr = "SELECT yuanma.Part.PartNo FROM yuanma.Part WHERE yuanma.Part.PartName='" + partName + "'";
 		try {
@@ -718,14 +743,14 @@ public class DBController {
 			String deptName = rs.getString(1);
 			rs.close();
 			return deptName;
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
-		return null;		
+		}
+		return null;
 	}
-	
+
 	public void addNewBuildDefault(String orderID, ArrayList<partRecord> partList){
 		for (int i = 0; i < partList.size(); i++){
 			String addNewBuildQueryStr = ""
@@ -736,10 +761,10 @@ public class DBController {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}			
+			}
 		}
 	}
-	
+
 	public int verify_contractStatus(String contrID){
 		String verifyContrStatusQueryStr = ""
 										+ "SELECT COUNT(*) "
@@ -761,16 +786,16 @@ public class DBController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
 		return -1;
-	}	
-	
+	}
+
 	public String getContrIDByOrderID(String orderID) {
 		String getContrIDQueryStr = ""
 								+ "SELECT yuanma.ContractOrder.ContrNO "
 								+ "FROM yuanma.ContractOrder "
 								+ "Where yuanma.ContractOrder.ORDERNO='" + orderID + "'";
-								
+
 		try {
 			ResultSet rs = stmt.executeQuery(getContrIDQueryStr);
 			rs.next();
@@ -781,14 +806,14 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
-	
+
 	// UNDONE
 	public int addNewReceipt(String deptName, String[] partArr, String shipName, String shipLaborFee){
 		ArrayList<String> partIDArr = new ArrayList<String>();
-		
+
 		for (int i = 0; i < partArr.length; i++){
 			partIDArr.add(getPartIDByName(partArr[i]));
 		}
@@ -796,13 +821,13 @@ public class DBController {
 		partIDArr.add("PRT0001");
 		partIDArr.add("PRT0002");
 		partIDArr.add("PRT0003");
-		
+
 		if (verify_receiptUnique(partIDArr) != 0){
 			return -1;
 		}
-		
+
 		addNewShipToDept(deptName, shipName, shipLaborFee);
-		
+
 
 		for (int i = 0; i < partIDArr.size(); i++){
 			String addNewReceipt = ""
@@ -815,14 +840,14 @@ public class DBController {
 				e.printStackTrace();
 			}
 		}
-						
+
 		return 0;
 
-	}	
-	
+	}
+
 	public int verify_receiptUnique(ArrayList<String> partIDArr) {
 		ArrayList<String> deptList = new ArrayList<String>();
-				
+
 		// Get the List of DeptName that has the same amount of parts
 		try {
 			String qStr = ""
@@ -838,23 +863,23 @@ public class DBController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
 
 		if (deptList.size() == 0){
 			return 0;
 		}
-		
-		
+
+
 		Set<String> partIDSet = new HashSet<String>();
 		// Compare Set of Parts
 		for (int i = 0; i < partIDArr.size(); i++){
 			partIDSet.add(partIDArr.get(i));
 		}
-		
+
 		for (int m = 0; m < deptList.size(); m++){
 			// create set for each department
 			Set<String> tempSet = new HashSet<String>();
-			
+
 			// fill the set with part id
 			try {
 				String qeStr = ""
@@ -869,25 +894,25 @@ public class DBController {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}	
+			}
 
 			// Compare The Content of The Two Set
 			if (partIDSet.containsAll(tempSet)){
 				return -1;
 			}
-			
+
 		}
-		
+
 		return 0;
-				
+
 	}
-		
+
 	// undone
 	public int scrapShipByOrder(String orderID){
 		String scrapShipQueryStr = ""
 										+ "UPDATE yuanma.ContractOrder "
 										+ "SET yuanma.ContractOrder.Status='Inactive' "
-										+ "WHERE yuanma.ContractOrder.ORDERNO='" + orderID + "'"; 
+										+ "WHERE yuanma.ContractOrder.ORDERNO='" + orderID + "'";
 		try {
 			stmt.executeQuery(scrapShipQueryStr);
 			return 0;
@@ -895,9 +920,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;			
+		return -1;
 	}
-	
+
 	public int getTotalPriceByOrder(String orderID){
 		String getOrderPriceQueryStr = ""
 								+ "SELECT SUM(yuanma.Part.Price) + yuanma.Department.basePrice "
@@ -917,16 +942,16 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;	
+		return -1;
 	}
-	
+
 	public int getTotalPartNumber(String orderID){
 		String getPartCountQueryStr = ""
 									+ "SELECT COUNT(yuanma.Build.PARTNO) "
 									+ "FROM yuanma.Build "
 									+ "WHERE yuanma.Build.OrderNO='" + orderID + "' "
 									+ "GROUP BY yuanma.Build.OrderNo";
-								
+
 		try {
 			ResultSet rs = stmt.executeQuery(getPartCountQueryStr);
 			rs.next();
@@ -937,14 +962,14 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;	
-	}	
-	
+		return -1;
+	}
+
 	public int addPartToOrder(String orderID, String[] partArr) {
 		for (int i = 0; i < partArr.length; i ++) {
 			// get the part id by part name
 			String partID = getPartIDByName(partArr[i]);
-			
+
 			// Insert into build table
 			String insertPartQueryStr = ""
 										+ "INSERT INTO yuanma.Build "
@@ -954,13 +979,13 @@ public class DBController {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}										
+			}
 		}
-		
+
 		return 0;
-		
+
 	}
-	
+
 	public ArrayList<partRecord> show_all_part_byOrderID(String orderID) {
 		ArrayList<partRecord> part_list = new ArrayList<partRecord>();
 		String listPartQueryStr = ""
@@ -979,9 +1004,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;	
+		return null;
 	}
-	
+
 	public ArrayList<vipRecord> show_all_rich_guy(){
 		// find all customer
 		ArrayList<vipRecord> cust_list = new ArrayList<vipRecord>();
@@ -1013,10 +1038,9 @@ public class DBController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
-		
+
 	}
 
 }
-	
