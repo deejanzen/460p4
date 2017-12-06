@@ -27,16 +27,16 @@
 	}
 </style>
 <body>
-	<h2>I like to:</h2>
+	<h2>Enter your name and email to create an account</h2>
 	<div id="custbox">
 		<form action="createNewCust.jsp" method="post">
 			FirstName <input type="text" id="fname" value="" name="fname">
-			<br>
+			<br><br>
 			LastName <input type="text" id="lname" value="" name="lname">
-			<br>
+			<br><br>
 			Email <input type="text" id="email" value="" name="email">
-			<br>
-			<button type="submit" value="submitBtn" name="submitBtn"> Login</button>
+			<br><br>
+			<button type="submit" value="submitBtn" name="submitBtn"> Create </button>
 		</form>
 	</div>
 	<%
@@ -81,8 +81,8 @@
 		return;
 	}
 
-	session.setAttribute("custID", cust_id);
-	response.sendRedirect("createNewCust.jsp");
+//	session.setAttribute("custID", cust_id);
+//	response.sendRedirect("createNewCust.jsp");
 
 
 
