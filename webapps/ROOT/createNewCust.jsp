@@ -71,7 +71,7 @@
 
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('You Customer ID is: " + cust_id + " \\n(Please Write It Down, Cuz You Won't See This Again In Your Life)');");
-			out.println("location='custLogin.jsp';");
+			out.println("location='customerPage.jsp';");
 			out.println("</script>");
 
 			dbc.disconnect();

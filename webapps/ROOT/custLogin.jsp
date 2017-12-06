@@ -69,16 +69,13 @@
 			response.sendRedirect("customerPage.jsp");
 			return;
 		}
+	} else {
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('You Cannot Leave Your First Name and Last Name Empty If You Are New Customer');");
+		out.println("location='custLogin.jsp';");
+		out.println("</script>");
+		return;
 	}
-
-	if (cust_fname == "" || cust_lname == "") {
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('You Cannot Leave Your First Name and Last Name Empty If You Are New Customer');");
-			out.println("location='custLogin.jsp';");
-			out.println("</script>");
-			return;
-	}
-
 	%>
 </body>
 </html>
