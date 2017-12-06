@@ -29,47 +29,18 @@
 	<div id="addNewOrderBox">
 
 	<center>
-		<h2>Add New Order</h2>
+		<h2>Query Question #1</h2>
 		<br>
-		<h3>Customer ID:
+		<h3> Choosing one from a list of ship types, report the cost of all the parts
 		<%
 			request.setCharacterEncoding("utf-8");
 			response.setContentType("text/html;charset=utf-8");
-			
-			String custID = session.getAttribute("custIDForContr").toString();		
-			out.write(custID);
-			
+			DBController dbc = new DBController();
 		%>
 		</h3>
-		<form action="addNewOrder.jsp" method="post">
+		<form action="query1.jsp" method="post">
 			<fieldset id = "field1">
-				<legend>Enter Information:</legend>				
-				
-				<h3>Choose Contract ID (choose newContract Will Start A New Contract):				
-					  <select size="1"
-							  class="bloc" name="contrSelect" id="contrSelect"
-							  onfocus='this.size=5;' onblur='this.size=1;'>		
-						<option value="newContract">New Contract</option>;
-						<%							
-							DBController dbc = new DBController();
-							dbc.connect();
-							
-							ArrayList<contractRecord> contrList = dbc.show_all_contractByCustID(custID);
-														
-							if (contrList != null && contrList.size() > 0) {
-								for (int i = 0; i < contrList.size(); i++) {
-									String contr_id = contrList.get(i).get_contrID();
-									out.write("<option value=" + contr_id + " >" + contr_id + "</option>");	
-								}
-							}							
-
-							dbc.disconnect();
-						%>
-					   </select>					
-				</h3>	
-				
-				&nbsp;&nbsp;&nbsp;
-				
+				<legend>Enter Information:</legend>								
 				<h3>Choose Ship Type: 
 					  <select size="1"
 							  class="bloc" name="shipSelect" id="shipSelect"
@@ -101,46 +72,30 @@
 		</form>
 	</center>
 	</div>
-	
 	<%
-	if (request.getParameter("viewBtn") == null){
+		if (request.getParameter("viewBtn") == null){
 		return;
 	}
 
-	String contrName = request.getParameter("contrSelect");
 	String shipName = request.getParameter("shipSelect");
-	
-	int newContrFlag = 0;
-			
-	if (contrName.equals("newContract")) {
-		dbc.connect();
-		newContrFlag = 1;
-		contrName = dbc.contrIDGenerator();
-		dbc.disconnect();
-	}
 	
 	if (shipName == null){
 		out.println("<script type=\"text/javascript\">");
-		out.println("alert('Please Select A Ship Model To Make An Order');");
+		out.println("alert('Please Select A Ship Model To Check The Part Price');");
 		out.println("</script>");
 		return;
 	}
 	
-	if (request.getParameter("viewBtn") != null){		
-
+	if (request.getParameter("viewBtn") != null){
 		int totalPrice = 0;
 		
 		dbc.connect();
 		int basePrice = dbc.getBasePriceByName(shipName);
-		String orderID = dbc.orderIDGenerator();
 		dbc.disconnect();
 		
 		String receiptContent = "";
 		
 		receiptContent += "Receipt\\n";
-		receiptContent += ("Contract ID: " + contrName + "\\n");
-		receiptContent += ("Customer ID: " + custID + "\\n");
-		receiptContent += ("Order ID: " + orderID + "\\n");
 		receiptContent += ("Ship Model: " + shipName + "\\n");
 		receiptContent += ("Ship Model Base Price: " + basePrice + "\\n");
 		
@@ -155,44 +110,15 @@
 				totalPrice += part_price;					
 				receiptContent += ("     " + i + ". PartName: " + part_name + "----------PartPrice: " + part_price + "\\n");
 			}
-		}	
-				
+		}					
 		totalPrice += basePrice;
-		
-		receiptContent += ("Total Price: " + totalPrice + "\\n");
-		
-		//out.println("<script type=\"text/javascript\">");
-		//out.println("alert('" + receiptContent + "');");
-		//out.println("</script>");
-		
-		if (newContrFlag == 1) {
-			
-			dbc.connect();
-			dbc.addNewContract(contrName, custID);
-			dbc.disconnect();
-			
-			//out.println("<script type=\"text/javascript\">");
-			//out.println("alert('Add New Contract');");
-			//out.println("</script>");	
-		
-		}
-		
-		dbc.connect();
-		dbc.addNewContractOrder(orderID, contrName, shipName);
-		dbc.addNewBuildDefault(orderID, partList);
-		dbc.disconnect();
-
+		receiptContent += ("Total Price: " + totalPrice + "\\n");						
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('" + receiptContent + "');");
-		out.println("location='customerPage.jsp';");
-		out.println("</script>");		
+		out.println("location='query1.jsp';");
+		out.println("</script>");			
 	}
+	%>
 	
-
-	
-	%>	
-		
 	</body>
-	
-
 </html>

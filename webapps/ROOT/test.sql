@@ -1,4 +1,6 @@
-SELECT yuanma.Part.PartNo, yuanma.Part.PartName, yuanma.Part.Price
-FROM (yuanma.Build
-JOIN yuanma.Part ON yuanma.Build.partNo=yuanma.Part.PartNo)
-WHERE yuanma.Build.ORDERNO='ORD0001';
+SELECT SUM(yuanma.Part.Price) as sumPrice, yuanma.Department.basePrice, yuanma.ContractOrder.OrderNo
+FROM (yuanma.ContractOrder
+LEFT JOIN yuanma.Build ON yuanma.ContractOrder.OrderNo=yuanma.Build.OrderNo
+LEFT JOIN yuanma.Part ON yuanma.Build.PartNo=yuanma.Part.PartNo
+LEFT JOIN yuanma.Department ON yuanma.ContractOrder.DeptName=yuanma.Department.DeptName)
+GROUP BY yuanma.ContractOrder.OrderNo, yuanma.Department.basePrice;
