@@ -106,7 +106,7 @@
 	
 	out.println("<script type=\"text/javascript\">");
 	out.println("alert('PartName: " + partName + "\\nPrice Change From: " + curPrice + " to " + partPrice + "');");
-	out.println("location='updatePartCost.jsp';");
+	out.println("location='managerPage.jsp';");
 	out.println("</script>");
 	%>
 	

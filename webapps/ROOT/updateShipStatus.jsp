@@ -186,9 +186,14 @@
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		
+		// undone
 		if (request.getParameter("submitScrapBtn") != null) {
+			dbc.connect();
+			dbc.scrapShipByOrder(orderID);
+			dbc.disconnect();
 			out.println("<script type=\"text/javascript\">");
-			out.println("location='updateShipStatus.jsp';");
+			out.println("alert('The Ship/Order Is Destroyed, Marked As Inactive')");
+			out.println("location='customerPage.jsp';");
 			out.println("</script>");
 		}
 		else if (request.getParameter("submitUpdateBtn") != null) {

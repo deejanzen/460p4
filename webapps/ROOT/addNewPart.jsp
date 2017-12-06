@@ -100,10 +100,12 @@
 	}
 	
 	int result = dbc.addNewPart(partName, partPrice);
-	out.println("<script type=\"text/javascript\">");
-	out.println("alert('" + result + "');");
-	out.println("location='addNewPart.jsp';");
-	out.println("</script>");
+	if (result == 0) {
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Part Has Been Added Into The Database');");
+		out.println("location='managerPage.jsp';");
+		out.println("</script>");	
+	}
 
 	dbc.disconnect();
 	%>

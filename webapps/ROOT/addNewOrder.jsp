@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="java.util.*, java.util.ArrayList, dbController.DBController, dbController.partRecord, dbController.deptRecord, dbController.contractRecord, dbController.orderRecord, dbController.customerRecord;"%>
+<%@page import="java.util.*, java.util.ArrayList, dbController.DBController, dbController.partRecord, dbController.deptRecord, dbController.buildRecord, dbController.contractRecord, dbController.customerRecord;"%>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,29 +22,7 @@
 				overflow-x: hidden;
 				position: absolute;
 				min-width:50px; 
-			}
-			.receiptPopUp {
-				display: none;
-				position: fixed;
-				z-index: 1;
-				padding-top: 100px;
-				left: 0;
-				top: 0;
-				width: 100%;
-				height: 100%;
-				overflow: auto;
-				background-color: rgb(0,0,0);
-				background-color: rgba(0,0,0,0.4);
-			}
-
-			.receiptPopUpContent {
-				background-color: #fefefe;
-				margin: auto;
-				padding: 20px;
-				border: 1px solid #888;
-				width: 80%;
-			}
-		
+			}		
 		</style>
 	</head>
 	<body>
@@ -119,53 +97,101 @@
 			
 			
 			<br>
-			<button type="submit" id="viewBtn" name="viewBtn"> View The Receipt</button>
-			&nbsp;
-			&nbsp;
-			<button type="submit" id="submitBtn" name="submitBtn"> Add The Order</button>
+			<button type="submit" id="viewBtn" name="viewBtn"> View The Receipt And Submit</button>
 		</form>
 	</center>
 	</div>
 	
-		
 	<%
-		if (request.getParameter("submitBtn") == null && request.getParameter("viewBtn") == null){
-			return;
-		}
+	if (request.getParameter("viewBtn") == null){
+		return;
+	}
+
+	String contrName = request.getParameter("contrSelect");
+	String shipName = request.getParameter("shipSelect");
+	
+	int newContrFlag = 0;
+			
+	if (contrName.equals("newContract")) {
+		dbc.connect();
+		newContrFlag = 1;
+		contrName = dbc.contrIDGenerator();
+		dbc.disconnect();
+	}
+	
+	if (shipName == null){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('Please Select A Ship Model To Makde An Order');");
+		out.println("</script>");
+		return;
+	}
+	
+	if (request.getParameter("viewBtn") != null){		
+
+		int totalPrice = 0;
 		
-		String contrName = request.getParameter("contrSelect");
-		String shipName = request.getParameter("shipSelect");
+		dbc.connect();
+		int basePrice = dbc.getBasePriceByName(shipName);
+		String orderID = dbc.orderIDGenerator();
+		dbc.disconnect();
+		
+		String receiptContent = "";
+		
+		receiptContent += "Receipt\\n";
+		receiptContent += ("Contract ID: " + contrName + "\\n");
+		receiptContent += ("Customer ID: " + custID + "\\n");
+		receiptContent += ("Order ID: " + orderID + "\\n");
+		receiptContent += ("Ship Model: " + shipName + "\\n");
+		receiptContent += ("Ship Model Base Price: " + basePrice + "\\n");
+		
+		dbc.connect();
+		ArrayList<partRecord> partList = dbc.show_all_part_byModelName(shipName);
+		dbc.disconnect();
+					
+		if (partList != null && partList.size() > 0) {
+			for (int i = 0; i < partList.size(); i++) {
+				String part_name = partList.get(i).get_partName();
+				int part_price = partList.get(i).get_partPrice();					
+				totalPrice += part_price;					
+				receiptContent += ("     " + i + ". PartName: " + part_name + "----------PartPrice: " + part_price + "\\n");
+			}
+		}	
 				
-		if (contrName.equals("newContract")) {
+		totalPrice += basePrice;
+		
+		receiptContent += ("Total Price: " + totalPrice + "\\n");
+		
+		//out.println("<script type=\"text/javascript\">");
+		//out.println("alert('" + receiptContent + "');");
+		//out.println("</script>");
+		
+		if (newContrFlag == 1) {
+			
 			dbc.connect();
-			contrName = dbc.contrIDGenerator();
+			dbc.addNewContract(contrName, custID);
 			dbc.disconnect();
+			
+			//out.println("<script type=\"text/javascript\">");
+			//out.println("alert('Add New Contract');");
+			//out.println("</script>");	
+		
 		}
 		
-		if (shipName == null){
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please Select A Ship Model To Makde An Order');");
-			out.println("</script>");
-		}
-		
-		if (request.getParameter("viewBtn") != null){			
-			String receiptContent = "";
-			receiptContent += "Receipt\\n";
-			receiptContent += ("Contract ID: " + contrName + "\\n");
-			receiptContent += ("Customer ID: " + custID + "\\n");
-			receiptContent += ("Ship Model: " + shipName + "\\n");
-		
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('" + receiptContent + "');");
-			out.println("</script>");
-		}
-	%>
-	
+		dbc.connect();
+		dbc.addNewContractOrder(orderID, contrName, shipName);
+		dbc.addNewBuildDefault(orderID, partList);
+		dbc.disconnect();
+
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('" + receiptContent + "');");
+		out.println("location='customerPage.jsp';");
+		out.println("</script>");		
+	}
 	
 
-
 	
-	
+	%>	
+		
 	</body>
 	
 

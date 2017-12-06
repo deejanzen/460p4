@@ -80,7 +80,7 @@
 									String part_name = partList.get(i).get_partName();
 
 									if (!part_name.equals("Hull") && !part_name.equals("Wing") && !part_name.equals("Engine")) {
-										out.write("<option value=" + part_name + " >" + part_name + "</option>");	
+										out.write("<option value='" + part_name + "' >" + part_name + "</option>");	
 									}
 								}
 							}							
@@ -200,12 +200,12 @@
 	}
 	
 	//DBController dbc = new DBController();
-  	dbc.connect();
-	
+  	
 	
 	String deptName = request.getParameter("deptName");		
 
 	// Check If the deptName is already in the database
+	dbc.connect();
 	int rtn = dbc.verify_department(deptName);
 	dbc.disconnect();
 	if(rtn == 1){
@@ -265,17 +265,35 @@
 		dbc.disconnect();
 		return;
 	}	
+	dbc.disconnect();
 	//out.println("<script type=\"text/javascript\">");
 	//out.println("alert(' yea ');");
 	//out.println("location='addNewShip.jsp';");
 	//out.println("</script>");
 	
-	int result = dbc.addNewShipToDept(deptName, partArr, shipName, shipLaborFee);
-	out.println("<script type=\"text/javascript\">");
-	out.println("alert('" + result + "');");
-	out.println("location='addNewShip.jsp';");
-	out.println("</script>");
+	dbc.connect();
+	int resultB = dbc.addNewReceipt(deptName, partArr, shipName, shipLaborFee);
 	dbc.disconnect();
+	if (resultB != 0){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('The Is Already A Ship Model With The Same Initial Build\\nPlease Re-create A New Ship');");
+		out.println("location='addNewShip.jsp';");
+		out.println("</script>");	
+	}
+	
+	out.println("<script type=\"text/javascript\">");
+	out.println("alert('The Ship Is Added Into The Database');");
+	out.println("location='managerPage.jsp';");
+	out.println("</script>");
+	
+	//dbc.connect();
+	//int result = dbc.addNewShipToDept(deptName, shipName, shipLaborFee);
+	//dbc.disconnect();
+	
+	//out.println("<script type=\"text/javascript\">");
+	//out.println("alert('" + resultB + "');");
+	//out.println("location='manager.jsp';");
+	//out.println("</script>");
 	%>
 
 	

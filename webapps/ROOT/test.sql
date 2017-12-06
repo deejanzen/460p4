@@ -1,5 +1,4 @@
-UPDATE yuanma.Build
-SET yuanma.Build.INSTALL='T'
-WHERE (yuanma.Build.ORDERNO='ORD0011'
-AND yuanma.Build.PARTNO='PRT0002');
-
+SELECT yuanma.Part.PartNo, yuanma.Part.PartName, yuanma.Part.Price
+FROM (yuanma.Build
+JOIN yuanma.Part ON yuanma.Build.partNo=yuanma.Part.PartNo)
+WHERE yuanma.Build.ORDERNO='ORD0001';
