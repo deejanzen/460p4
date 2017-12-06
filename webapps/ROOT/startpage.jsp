@@ -23,7 +23,9 @@
 		<form action="startpage.jsp">
 			<br>
 			<button type="button" onclick="window.location.href='createNewCust.jsp'">New Customer</button>
+			<br>
 			<button type="button" onclick="window.location.href='custLogin.jsp'">Existing Customer</button>
+			<br>
 			<button type="button" onclick="window.location.href='managerPage.jsp'">Manager</button>
 			<br>
 		</form>

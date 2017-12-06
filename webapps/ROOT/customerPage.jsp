@@ -20,18 +20,18 @@
 	<div id="customerBox">
 
 	<center>
-		<h2>Customer Selection</h2>
+		<h2>What would you like to do:</h2>
 		<form action="customerPage.jsp" method="post">
 			<fieldset id = "field1">
 				<legend>Customer Selection:</legend>
-				<input type="radio" name="myRadio" value="addOrder"/> Add New Order
+				<input type="radio" name="myRadio" value="addOrder"/> Create a New Contract
 				<br>
-				<input type="radio" name="myRadio" value="checkContract"/> Check Contract
+				<input type="radio" name="myRadio" value="checkContract"/> Check Contract Status
 				<br>
 			</fieldset>
-			
+
 			<br>
-			
+
 			Please Choose One Action From Above:
 			<br>
 			<button type="submit" value="submitBtn" name="submitBtn">submit</button>
@@ -42,7 +42,7 @@
 	<%
 		String cust_id = session.getAttribute("custID").toString();
 		session.setAttribute("custIDForContr", cust_id);
-				
+
 		if(request.getParameter("submitBtn") == null){
 			return;
 		}

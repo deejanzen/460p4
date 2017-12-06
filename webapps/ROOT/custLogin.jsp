@@ -48,6 +48,7 @@
 
 	DBController dbc = new DBController();
 
+	String cust_id = "";
 	String cust_fname = request.getParameter("fname");
 	String cust_lname = request.getParameter("lname");
 	String cust_email = request.getParameter("email");
@@ -55,10 +56,11 @@
 	if (cust_fname != "" && cust_lname != "" && cust_email != ""){
 		// check if the customer id is in the database
 		dbc.connect();
-		if (dbc.verify_customerById(cust_id) != 1){
+		cust_id = dbc.verify_customerByName(cust_fname, cust_lname, cust_email);
+		if ( cust_id == ""){
 			dbc.disconnect();
 			out.println("<script type=\"text/javascript\">");
-			out.println("alert('This Customer ID Is Not Exist\\nPlease Enter A New CustomerID\\Or You Can Fullfill The Blank Below To Create Your Profile');");
+			out.println("alert('Entered information do not found in the database, would you like to create an account?');");
 			out.println("location='createNewCust.jsp';");
 			out.println("</script>");
 			return;
@@ -76,7 +78,7 @@
 			out.println("</script>");
 			return;
 	}
-	
+
 	%>
 </body>
 </html>
