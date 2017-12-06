@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@page import="java.util.*, java.util.ArrayList, dbController.DBController, dbController.partRecord, dbController.deptRecord, dbController.contractRecord, dbController.orderRecord, dbController.customerRecord;"%>
+<%@page import="java.util.*, java.util.ArrayList, dbController.DBController, dbController.partRecord, dbController.deptRecord, dbController.*;"%>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -52,17 +52,6 @@
 
 	<center>
 		<h2>Add New Order</h2>
-		<br>
-		<h3>Customer ID:
-		<%
-			request.setCharacterEncoding("utf-8");
-			response.setContentType("text/html;charset=utf-8");
-			
-			String custID = session.getAttribute("custIDForContr").toString();		
-			out.write(custID);
-			
-		%>
-		</h3>
 		<form action="addNewOrder.jsp" method="post">
 			<fieldset id = "field1">
 				<legend>Enter Information:</legend>				
@@ -72,11 +61,16 @@
 							  class="bloc" name="contrSelect" id="contrSelect"
 							  onfocus='this.size=5;' onblur='this.size=1;'>		
 						<option value="newContract">New Contract</option>;
-						<%							
+						<%
+							request.setCharacterEncoding("utf-8");
+							response.setContentType("text/html;charset=utf-8");
+							
+							String custID = session.getAttribute("custIDForContr").toString();	
+							
 							DBController dbc = new DBController();
 							dbc.connect();
 							
-							ArrayList<contractRecord> contrList = dbc.show_all_contractByCustID(custID);
+							ArrayList<contractRecord> contrList = dbc.show_all_contractByCustID();
 														
 							if (contrList != null && contrList.size() > 0) {
 								for (int i = 0; i < contrList.size(); i++) {
@@ -119,7 +113,7 @@
 			
 			
 			<br>
-			<button type="submit" id="viewBtn" name="viewBtn"> View The Receipt</button>
+			<button type="button" id="viewBtn" name="viewBtn"> View The Receipt</button>
 			&nbsp;
 			&nbsp;
 			<button type="submit" id="submitBtn" name="submitBtn"> Add The Order</button>
@@ -127,42 +121,23 @@
 	</center>
 	</div>
 	
-		
-	<%
-		if (request.getParameter("submitBtn") == null && request.getParameter("viewBtn") == null){
-			return;
-		}
-		
-		String contrName = request.getParameter("contrSelect");
-		String shipName = request.getParameter("shipSelect");
-				
-		if (contrName.equals("newContract")) {
-			dbc.connect();
-			contrName = dbc.contrIDGenerator();
-			dbc.disconnect();
-		}
-		
-		if (shipName == null){
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please Select A Ship Model To Makde An Order');");
-			out.println("</script>");
-		}
-		
-		if (request.getParameter("viewBtn") != null){			
-			String receiptContent = "";
-			receiptContent += "Receipt\\n";
-			receiptContent += ("Contract ID: " + contrName + "\\n");
-			receiptContent += ("Customer ID: " + custID + "\\n");
-			receiptContent += ("Ship Model: " + shipName + "\\n");
-		
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('" + receiptContent + "');");
-			out.println("</script>");
-		}
-	%>
+	<div id="shipReceipt" class="receiptPopUp">
+	  <div id="shipReceiptContent" class="receiptPopUpContent">
+	  </div>
+	</div>	
 	
+	<script>
+	
+	</script>	
 	
 
+	<%
+	if (request.getParameter("submitBtn") == null){
+		return;
+	}
+	
+
+	%>
 
 	
 	

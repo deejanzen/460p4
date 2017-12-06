@@ -52,8 +52,8 @@
 		
 	String cust_id = request.getParameter("custID");
 	String cust_fname = request.getParameter("fname");
-	String cust_lname = request.getParameter("custID");
-	String cust_email = request.getParameter("fname");
+	String cust_lname = request.getParameter("lname");
+	String cust_email = request.getParameter("email");
 	
 	if (cust_id != ""){
 		// check if the customer id is in the database
@@ -82,7 +82,7 @@
 	dbc.connect();
 	
 	cust_id = dbc.custIDGenerator();
-	dbc.addNewCustomer(cust_id, fname, lname, email);
+	dbc.addNewCustomer(cust_id, cust_fname, cust_lname, cust_email);
 	
 	session.setAttribute("custID", cust_id);
 	response.sendRedirect("customerPage.jsp");

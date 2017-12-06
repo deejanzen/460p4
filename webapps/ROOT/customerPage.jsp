@@ -34,12 +34,15 @@
 			
 			Please Choose One Action From Above:
 			<br>
-			<button type="submit" value="submitBtn" name="submitBtn"> submit</button>
-			<button type="button" onclick="window.location.href='login.jsp'">Back</button>
+			<button type="submit" value="submitBtn" name="submitBtn">submit</button>
+			<button type="button" onclick="window.location.href='custLogin.jsp'">Back</button>
 		</form>
 	</center>
 	</div>
 	<%
+		String cust_id = session.getAttribute("custID").toString();
+		session.setAttribute("custIDForContr", cust_id);
+				
 		if(request.getParameter("submitBtn") == null){
 			return;
 		}
@@ -53,14 +56,12 @@
 			}
 			else if(selection.equals("addOrder")){
 				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Add Order Selected');");
-				out.println("location='customerPage.jsp';");
+				out.println("location='addNewOrder.jsp';");
 				out.println("</script>");
 			}
 			else if(selection.equals("checkContract")){
 				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Check Contract');");
-				out.println("location='userPage.jsp';");
+				out.println("location='updateContract.jsp';");
 				out.println("</script>");
 
 			}

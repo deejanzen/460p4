@@ -353,7 +353,27 @@ public class DBController {
 			e.printStackTrace();
 		}
 		return -1;	
+	}
+
+	public int getBasePriceByName(String shipName) {
+		String getBasePriceQueryStr = ""
+									+ "SELECT yuanma.Department.LaborCost "
+									+ "FROM yuanma.Department "
+									+ "WHERE yuanma.Department.Model='" + shipName + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(getBasePriceQueryStr);
+			rs.next();
+			int basePrice = rs.getInt(1);
+			rs.close();
+			return basePrice;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;	
 	}	
+
+		
 	
 	public int updatePartPrice(String partName, String partPrice) {
 		String updatePartPriceQueryStr = ""
@@ -572,6 +592,48 @@ public class DBController {
 		
 		return -1;			
 	}
+	
+	// List all the contract in the contract Table
+	public ArrayList<contractRecord> show_all_contractByCustID(String custID) {
+		ArrayList<contractRecord> contr_list = new ArrayList<contractRecord>();
+		String listContrQueryStr = ""
+								+ "SELECT * "
+								+ "FROM yuanma.Contract "
+								+ "WHERE yuanma.Contract.CustNo='" + custID + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(listContrQueryStr);
+			while(rs.next()){
+				contr_list.add(new contractRecord(rs.getString(1), rs.getString(2), rs.getString(3)));
+			}
+			rs.close();
+			return contr_list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+	}
+	
+	// List all the contract in the contract Table
+	public ArrayList<orderRecord> show_all_orderByContract(String contrID) {
+		ArrayList<orderRecord> order_list = new ArrayList<orderRecord>();
+		String listOrderQueryStr = ""
+								+ "SELECT * "
+								+ "FROM yuanma.ContractOrder "
+								+ "WHERE yuanma.ContractOrder.ContrNo='" + contrID + "'";
+		try {
+			ResultSet rs = stmt.executeQuery(listOrderQueryStr);
+			while(rs.next()){
+				order_list.add(new orderRecord(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)));
+			}
+			rs.close();
+			return order_list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;		
+	}	
 	
 }
 	
