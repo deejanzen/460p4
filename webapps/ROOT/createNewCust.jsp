@@ -37,6 +37,8 @@
 			Email <input type="text" id="email" value="" name="email">
 			<br><br>
 			<button type="submit" value="submitBtn" name="submitBtn"> Create </button>
+			<br><br>
+			<button type="button" onclick="window.location.href='startpage.jsp'">Go Back</button>
 		</form>
 	</div>
 	<%
@@ -53,7 +55,7 @@
 	String cust_lname = request.getParameter("lname");
 	String cust_email = request.getParameter("email");
 
-	if (cust_id != "" && cust_fname != "" && cust_email != ""){
+	if (cust_lname != "" && cust_fname != "" && cust_email != ""){
 		// check if the customer id is in the database
 		dbc.connect();
 		cust_id = dbc.verify_customerByName(cust_fname, cust_lname, cust_email);
@@ -71,13 +73,20 @@
 
 			out.println("<script type=\"text/javascript\">");
 			out.println("alert('You Customer ID is: " + cust_id + " \\n(Please Write It Down, Cuz You Won't See This Again In Your Life)');");
-			out.println("location='customerPage.jsp';");
+			out.println("location='custLogin.jsp';");
 			out.println("</script>");
-
 			dbc.disconnect();
+
+			session.setAttribute("custID",cust_id);
+			response.sendRedirect("customerPage.jsp");
+			return;
 		}
-		session.setAttribute("custID",cust_id);
-		response.sendRedirect("customerPage.jsp");
+
+	} else {
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('Customer information already exist in the database');");
+		out.println("location='createNewCust.jsp';");
+		out.println("</script>");
 		return;
 	}
 
