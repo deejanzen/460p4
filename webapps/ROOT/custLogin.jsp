@@ -37,6 +37,8 @@
 			Email <input type="text" id="email" value="" name="email">
 			<br>
 			<button type="submit" value="submitBtn" name="submitBtn"> Login</button>
+			<br><br>
+			<button type="button" onclick="window.location.href='startpage.jsp'">Home</button>
 		</form>
 	</div>
 	<%
@@ -63,18 +65,15 @@
 			out.println("alert('Entered information do not found in the database, would you like to create an account?');");
 			out.println("location='createNewCust.jsp';");
 			out.println("</script>");
-			return;
 		} else {
 			session.setAttribute("custID",cust_id);
 			response.sendRedirect("customerPage.jsp");
-			return;
 		}
 	} else {
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('You Cannot Leave Your First Name and Last Name Empty If You Are New Customer');");
 		out.println("location='custLogin.jsp';");
 		out.println("</script>");
-		return;
 	}
 	%>
 </body>

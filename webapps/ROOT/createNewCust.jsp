@@ -11,7 +11,7 @@
 		border-radius: 5px;
 		text-align: center;
 		padding: 20px;
-		height: 200px;
+		height: 300px;
 		width: 400px;
 		position:relative;
 		left:35%;
@@ -65,7 +65,9 @@
 			out.println("alert('Customer information already exist in the database');");
 			out.println("location='customerPage.jsp';");
 			out.println("</script>");
-			return;
+
+			session.setAttribute("custID",cust_id);
+			response.sendRedirect("customerPage.jsp");
 		} else {
 			dbc.connect();
 			cust_id = dbc.custIDGenerator();
@@ -79,7 +81,6 @@
 
 			session.setAttribute("custID",cust_id);
 			response.sendRedirect("customerPage.jsp");
-			return;
 		}
 
 	} else {
@@ -87,7 +88,6 @@
 		out.println("alert('Customer information already exist in the database');");
 		out.println("location='createNewCust.jsp';");
 		out.println("</script>");
-		return;
 	}
 
 //	session.setAttribute("custID", cust_id);
