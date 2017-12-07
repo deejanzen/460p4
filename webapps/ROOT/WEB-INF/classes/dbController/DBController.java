@@ -1061,7 +1061,7 @@ public ArrayList<FeatureRecord> show_all_features(String deptName) {
 			feat_list.add(new FeatureRecord(dptN, prtN, prc));
 		}
 		rs.close();
-		return dept_list;
+		return feat_list;
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
