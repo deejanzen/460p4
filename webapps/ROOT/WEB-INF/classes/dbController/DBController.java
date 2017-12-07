@@ -1052,6 +1052,8 @@ public ArrayList<FeatureRecord> show_all_features(String deptName) {
 								 "From yuanma.Feature ft, yuanma.Part pt" +
 								 "WHERE ft.deptName ='" + deptName + "' AND " +
 								 "ft.partNo = pt.partNo";
+	System.out.println("deptName is " + deptName + "\n");
+	System.out.println(listAllDeptQueryStr);
 	try {
 		ResultSet rs = stmt.executeQuery(listAllDeptQueryStr);
 		while(rs.next()){

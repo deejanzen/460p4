@@ -3,11 +3,11 @@
               class="bloc" name="feat1Select" id="feat1Select"
               onfocus='this.size=5;' onblur='this.size=1;'>
         <%
-//            String m = session.getAttribute("shipmodel").toString();
+            String m = session.getAttribute("shipmodel").toString();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('model is " + m + " dept is " + dept + "');");
             out.println("</script>");
-//            dbc.connect();
+            dbc.connect();
             featList = dbc.show_all_features(dept);
 
             if (featList != null && featList.size() > 0) {
@@ -21,6 +21,7 @@
                 out.println("</script>");
                 return;
             }
+            dbc.disconnect();
         %>
        </select>
 </h3>
