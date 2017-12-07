@@ -125,9 +125,15 @@
 		return;
 	}
 
+	String dept = null;
 	if (request.getParameter("nextBtn") != null) {
 		model = request.getParameter("modelSelect");
-		session.setAttribute("shipmodel", model);
+		for (deptRecord r : deptList) {
+			if (model.equals(r.get_modelName())) {
+				dept = r.get_deptName();
+			}
+		}
+//		session.setAttribute("shipmodel", model);
 //		response.sendRedirect("featPart.jsp");
 	}
 
