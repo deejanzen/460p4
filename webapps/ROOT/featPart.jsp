@@ -7,9 +7,7 @@
             dbc.connect();
 //
             featList = dbc.show_all_features(dept);
-            out.println("<script type=\"text/javascript\">");
-            out.println("alert(' the query is " + s + " ');");
-            out.println("</script>");
+
             dbc.disconnect();
 
             if (featList != null && featList.size() > 0) {
