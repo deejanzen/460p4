@@ -128,14 +128,23 @@
 	String dept = "";
 	if (request.getParameter("nextBtn") != null) {
 //		model = request.getParameter("modelSelect");
-		out.println("<script type=\"text/javascript\">");
-		out.println("alert('first model is " + model + "');");
-		out.println("</script>");
+
 		if (model != null) {
 			for (deptRecord r : deptList) {
 				if (model.equals(r.get_modelName())) {
 					dept = r.get_deptName();
 				}
+			}
+			if (!dept.isEmpty()) {
+				dbc.connect();
+				featList = dbc.show_all_features(dept);
+				dbc.disconnect();
+				request.setAttribute("featList", featList);
+//				session.setAttribute("featNo", featList.size());
+
+//				out.println("<script type=\"text/javascript\">");
+//				out.println("alert('--> The list size  is " + len + "');");
+//				out.println("</script>");
 			}
 		}
 //		session.setAttribute("shipmodel", model);
@@ -152,3 +161,9 @@
             <%@ include file="featPart.jsp" %>
         </c:otherwise>
     </c:choose>
+
+	<c:forEach var = "j" begin="1" end="5">
+		<%@ include file="featPart.jsp" %>
+	</c:forEach>
+
+	<%@ include file="addNewOrderBase.jsp" %>
