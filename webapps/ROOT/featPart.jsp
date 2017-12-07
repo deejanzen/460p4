@@ -2,7 +2,7 @@
 <h3> Feature 1
       <select size="1"
               class="bloc" name="feat1Select" id="feat1Select"
-              onfocus='this.size=12;' onblur='this.size=1;'>
+              onfocus='this.size=5;' onblur='this.size=1;'>
         <%
 //            dbc.connect();
 //            featList = dbc.show_all_features(dept);
@@ -28,7 +28,7 @@
 <h3>Feature 2:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
-               onfocus='this.size=12;' onblur='this.size=1;'>
+               onfocus='this.size=5;' onblur='this.size=1;'>
          <%
              if (featList != null && featList.size() > 0) {
                  for (int i = 3; i < featList.size(); i++) {
@@ -45,7 +45,7 @@
 <h3>Feature 3:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
-               onfocus='this.size=12;' onblur='this.size=1;'>
+               onfocus='this.size=5;' onblur='this.size=1;'>
          <%
              if (featList != null && featList.size() > 0) {
                  for (int i = 3; i < featList.size(); i++) {
@@ -62,7 +62,7 @@
 <h3>Feature 4:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
-               onfocus='this.size=12;' onblur='this.size=1;'>
+               onfocus='this.size=5;' onblur='this.size=1;'>
          <%
              if (featList != null && featList.size() > 0) {
                  for (int i = 3; i < featList.size(); i++) {
@@ -73,13 +73,15 @@
          %>
         </select>
 </h3>
-</div> <br> <br>
+</div>
+<br>
+&nbsp;&nbsp;&nbsp;
 
 <div style='width:25%;float:left'>
 <h3>Feature 5:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
-               onfocus='this.size=12;' onblur='this.size=1;'>
+               onfocus='this.size=5;' onblur='this.size=1;'>
          <%
              if (featList != null && featList.size() > 0) {
                  for (int i = 3; i < featList.size(); i++) {
@@ -96,7 +98,7 @@
 <h3>Feature 6:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
-               onfocus='this.size=12;' onblur='this.size=1;'>
+               onfocus='this.size=5;' onblur='this.size=1;'>
          <%
              if (featList != null && featList.size() > 0) {
                  for (int i = 3; i < featList.size(); i++) {
@@ -113,7 +115,7 @@
 <h3>Feature 7:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
-               onfocus='this.size=12;' onblur='this.size=1;'>
+               onfocus='this.size=5;' onblur='this.size=1;'>
          <%
              if (featList != null && featList.size() > 0) {
                  for (int i = 3; i < featList.size(); i++) {
@@ -130,7 +132,7 @@
 <h3>Feature 8:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
-               onfocus='this.size=12;' onblur='this.size=1;'>
+               onfocus='this.size=5;' onblur='this.size=1;'>
          <%
              if (featList != null && featList.size() > 0) {
                  for (int i = 3; i < featList.size(); i++) {
