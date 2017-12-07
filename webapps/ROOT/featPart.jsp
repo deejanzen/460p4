@@ -123,14 +123,89 @@
 </h3>
 </fieldset>
 <br>
-<button type="submit" id="viewBtn" name="viewBtn"> View The Receipt And Submit</button>
+<button type="submit" id="viewBtn" name="viewBtn"> Place Your Order</button>
 
-<br>
 </form>
 </center>
 </div>
 
 <%
+    if (request.getParameter("viewBtn") == null){
+        return;
+    }
+
+    String contrName = request.getParameter("contrSelect");
+    String shipName = deptList.get
+
+	if (contrName.equals("newContract")) {
+		dbc.connect();
+		newContrFlag = 1;
+		contrName = dbc.contrIDGenerator();
+		dbc.disconnect();
+	}
+
+
+	if (request.getParameter("viewBtn") != null){
+		int totalPrice = 0;
+
+
+
+		dbc.connect();
+		int basePrice = dbc.getBasePriceByName(shipName);
+		String orderID = dbc.orderIDGenerator();
+		dbc.disconnect();
+
+		String receiptContent = "";
+
+		receiptContent += "Receipt\\n";
+		receiptContent += ("Contract ID: " + contrName + "\\n");
+		receiptContent += ("Customer ID: " + custID + "\\n");
+		receiptContent += ("Order ID: " + orderID + "\\n");
+		receiptContent += ("Ship Model: " + shipName + "\\n");
+		receiptContent += ("Ship Model Base Price: " + basePrice + "\\n");
+
+		dbc.connect();
+		ArrayList<partRecord> partList = dbc.show_all_part_byModelName(shipName);
+		dbc.disconnect();
+
+		if (partList != null && partList.size() > 0) {
+			for (int i = 0; i < partList.size(); i++) {
+				String part_name = partList.get(i).get_partName();
+				int part_price = partList.get(i).get_partPrice();
+				totalPrice += part_price;
+				receiptContent += ("     " + i + ". PartName: " + part_name + "----------PartPrice: " + part_price + "\\n");
+			}
+		}
+
+		totalPrice += basePrice;
+
+		receiptContent += ("Total Price: " + totalPrice + "\\n");
+
+		//out.println("<script type=\"text/javascript\">");
+		//out.println("alert('" + receiptContent + "');");
+		//out.println("</script>");
+
+		if (newContrFlag == 1) {
+
+			dbc.connect();
+			dbc.addNewContract(contrName, custID);
+			dbc.disconnect();
+
+			//out.println("<script type=\"text/javascript\">");
+			//out.println("alert('Add New Contract');");
+			//out.println("</script>");
+
+		}
+
+		dbc.connect();
+		dbc.addNewContractOrder(orderID, contrName, shipName);
+		dbc.addNewBuildDefault(orderID, partList);
+		dbc.disconnect();
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('" + receiptContent + "');");
+		out.println("location='customerPage.jsp';");
+		out.println("</script>");
+	}
 
 %>
 

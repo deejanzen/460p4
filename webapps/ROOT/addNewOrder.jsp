@@ -150,7 +150,7 @@
 //		session.setAttribute("shipmodel", model);
 //		response.sendRedirect("featPart.jsp");
 	}
-
+	int newContrFlag = 0;
 	%>
 	<%@ include file="addNewOrderBase.jsp" %>
 
