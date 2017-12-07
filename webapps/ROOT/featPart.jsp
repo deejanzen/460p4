@@ -134,8 +134,8 @@
         return;
     }
 
-    String contrName = request.getParameter("contrSelect");
-    String shipName = deptList.get
+    contrName = request.getParameter("contrSelect");
+    shipName = request.getParameter("modelSelect");
 
 	if (contrName.equals("newContract")) {
 		dbc.connect();
