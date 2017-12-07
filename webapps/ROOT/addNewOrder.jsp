@@ -104,8 +104,8 @@
 
 				            if (featList != null && featList.size() > 0) {
 				                for (int i = 0; i < featList.size(); i++) {
-				                    String modelName = featList.get(i).get_modelName();
-				                    out.write("<option value=" + modelName + " >" + modelName + "</option>");
+				                    String partName = featList.get(i).get_partNum();
+				                    out.write("<option value=" + partName + " >" + partName + "</option>");
 				                }
 				            }
 
@@ -121,8 +121,8 @@
 				         <%
 				             if (featList != null && featList.size() > 0) {
 				                 for (int i = 0; i < featList.size(); i++) {
-				                     String modelName = featList.get(i).get_modelName();
-				                     out.write("<option value=" + modelName + " >" + modelName + "</option>");
+				                     String partName = featList.get(i).get_partNum();
+				                     out.write("<option value=" + partName + " >" + partName + "</option>");
 				                 }
 							 }
 				         %>
