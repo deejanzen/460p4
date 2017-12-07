@@ -1,3 +1,4 @@
+<div style='width:25%;float:left'>
 <h3> Feature 1
       <select size="1"
               class="bloc" name="feat1Select" id="feat1Select"
@@ -21,6 +22,9 @@
         %>
        </select>
 </h3>
+</div>
+
+<div style='width:25%;float:left'>
 <h3>Feature 2:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -35,6 +39,9 @@
          %>
         </select>
 </h3>
+</div>
+
+<div style='width:25%;float:left'>
 <h3>Feature 3:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -49,6 +56,9 @@
          %>
         </select>
 </h3>
+</div>
+
+<div style='width:25%;float:left'>
 <h3>Feature 4:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -63,6 +73,9 @@
          %>
         </select>
 </h3>
+</div> <br> <br>
+
+<div style='width:25%;float:left'>
 <h3>Feature 5:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -77,6 +90,9 @@
          %>
         </select>
 </h3>
+</div>
+
+<div style='width:25%;float:left'>
 <h3>Feature 6:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -91,6 +107,9 @@
          %>
         </select>
 </h3>
+</div>
+
+<div style='width:25%;float:left'>
 <h3>Feature 7:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -105,6 +124,9 @@
          %>
         </select>
 </h3>
+</div>
+
+<div style='width:25%;float:left'>
 <h3>Feature 8:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -119,6 +141,8 @@
          %>
         </select>
 </h3>
+</div>
+
 </fieldset>
 <br>
 <button type="submit" id="viewBtn" name="viewBtn"> Place Your Order</button>
@@ -131,7 +155,7 @@
     if (request.getParameter("viewBtn") == null){
         return;
     }
-
+    custID = session.getAttribute("custIDForContr").toString();
     contrName = request.getParameter("contrSelect");
     String shipName = request.getParameter("modelSelect");
 
