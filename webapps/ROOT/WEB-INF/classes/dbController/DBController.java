@@ -1045,8 +1045,8 @@ public class DBController {
 
 
 
-// List all of the department in the Department Table ArrayList<FeatureRecord>
-public  String show_all_features(String deptName) {
+// List all of the department in the Department Table
+public  ArrayList<FeatureRecord> show_all_features(String deptName) {
 	ArrayList<FeatureRecord> feat_list = new ArrayList<FeatureRecord>();
 	String listAllDeptQueryStr = "SELECT ft.deptName, pt.partName, pt.price " +
 								 "From yuanma.Feature ft, yuanma.Part pt " +
@@ -1067,7 +1067,7 @@ public  String show_all_features(String deptName) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	return listAllDeptQueryStr;
+	return feat_list;
 }
 
 
