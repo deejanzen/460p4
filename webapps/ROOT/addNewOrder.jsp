@@ -162,8 +162,10 @@
         </c:otherwise>
     </c:choose>
 
+<%--
 	<c:forEach var = "j" begin="1" end="5">
 		<%@ include file="featPart.jsp" %>
 	</c:forEach>
 
 	<%@ include file="addNewOrderBase.jsp" %>
+-->
