@@ -1043,4 +1043,30 @@ public class DBController {
 
 	}
 
+
+
+// List all of the department in the Department Table
+public ArrayList<FeatureRecord> show_all_features(String deptName) {
+	ArrayList<FeatureRecord> feat_list = new ArrayList<deptRecord>();
+	String listAllDeptQueryStr = "SELECT ft.deptName, pt.partName, pt.price " +
+								 "From yuanma.Feature ft yuanma.Part pt" +
+								 "WHERE ft.deptName ='" + deptName + "' AND " +
+								 "ft.partNo = pt.partNo";
+	try {
+		ResultSet rs = stmt.executeQuery(listAllDeptQueryStr);
+		while(rs.next()){
+			String dptN = rs.getString("deptName");
+			String prtN = rs.getString("partName");
+			feat_list.add(new FeatureRecord(dptN, prtN));
+		}
+		rs.close();
+		return dept_list;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
+
+
 }

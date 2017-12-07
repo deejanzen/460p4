@@ -70,9 +70,9 @@
 
 				&nbsp;&nbsp;&nbsp;
 
-				<h3>Choose Ship Type:
+				<h3>Select a model:
 					  <select size="1"
-							  class="bloc" name="shipSelect" id="shipSelect"
+							  class="bloc" name="modelSelect" id="modelSelect"
 							  onfocus='this.size=5;' onblur='this.size=1;'>
 						<%
 							dbc.connect();
@@ -89,6 +89,44 @@
 							dbc.disconnect();
 						%>
 					   </select>
+				</h3>
+
+				&nbsp;&nbsp;&nbsp;
+
+				<h3>Feature 1:
+				      <select size="1"
+				              class="bloc" name="feat1Select" id="feat1Select"
+				              onfocus='this.size=5;' onblur='this.size=1;'>
+				        <%
+				            dbc.connect();
+							String model = request.getParameter("modelSelect");
+				            ArrayList<deptRecord> featList = dbc.show_all_features(model);
+
+				            if (featList != null && featList.size() > 0) {
+				                for (int i = 0; i < featList.size(); i++) {
+				                    String modelName = featList.get(i).get_modelName();
+				                    out.write("<option value=" + modelName + " >" + modelName + "</option>");
+				                }
+				            }
+
+				            dbc.disconnect();
+				        %>
+				       </select>
+				</h3>
+				<br><br>
+				<h3>Feature 2:
+				        <select size="1"
+				               class="bloc" name="feat2Select" id="feat2Select"
+				               onfocus='this.size=5;' onblur='this.size=1;'>
+				         <%
+				             if (featList != null && featList.size() > 0) {
+				                 for (int i = 0; i < featList.size(); i++) {
+				                     String modelName = featList.get(i).get_modelName();
+				                     out.write("<option value=" + modelName + " >" + modelName + "</option>");
+				                 }
+							 }
+				         %>
+				        </select>
 				</h3>
 
 				<br>
@@ -109,7 +147,7 @@
 	}
 
 	String contrName = request.getParameter("contrSelect");
-	String shipName = request.getParameter("shipSelect");
+	String shipName = request.getParameter("modelSelect");
 
 	int newContrFlag = 0;
 
@@ -192,8 +230,7 @@
 
 
 	%>
-
-	</body>
+</body>
 
 
 </html>
