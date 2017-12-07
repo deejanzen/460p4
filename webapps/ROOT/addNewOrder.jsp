@@ -90,18 +90,29 @@
 						%>
 					   </select>
 				</h3>
-				<button type="submit" id="nextBtn" name="viewBtn">Select Model</button>
+				<button type="submit" id="nextBtn" name="nextBtn">Select Model</button>
 
 				&nbsp;&nbsp;&nbsp;
+
+				<%
+					if (request.getParameter("modelSelect") == null) {
+						out.println("<script type=\"text/javascript\">");
+						out.println("alert('Please choose a Model to proceed the order!');");
+						out.println("location='customerPage.jsp';");
+						out.println("</script>");
+						return;
+					} else {
+						dbc.connect();
+						String model = request.getParameter("modelSelect");
+						ArrayList<FeatureRecord> featList = dbc.show_all_features(model);
+					}
+				%>
 
 				<h3>Feature 1:
 				      <select size="1"
 				              class="bloc" name="feat1Select" id="feat1Select"
 				              onfocus='this.size=5;' onblur='this.size=1;'>
 				        <%
-							if (request.getParameter("nextBtn") == null){
-								return;
-							}
 				            dbc.connect();
 							String model = request.getParameter("modelSelect");
 				            ArrayList<FeatureRecord> featList = dbc.show_all_features(model);
@@ -147,6 +158,10 @@
 
 	<%
 	if (request.getParameter("viewBtn") == null){
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('Please choose a Model to proceed the order!');");
+		out.println("location='customerPage.jsp';");
+		out.println("</script>");
 		return;
 	}
 
