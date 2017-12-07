@@ -90,6 +90,7 @@
 						%>
 					   </select>
 				</h3>
+				<button type="submit" id="nextBtn" name="viewBtn">Select Model</button>
 
 				&nbsp;&nbsp;&nbsp;
 
@@ -98,6 +99,9 @@
 				              class="bloc" name="feat1Select" id="feat1Select"
 				              onfocus='this.size=5;' onblur='this.size=1;'>
 				        <%
+							if (request.getParameter("nextBtn") == null){
+								return;
+							}
 				            dbc.connect();
 							String model = request.getParameter("modelSelect");
 				            ArrayList<FeatureRecord> featList = dbc.show_all_features(model);
