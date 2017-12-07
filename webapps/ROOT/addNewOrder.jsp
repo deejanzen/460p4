@@ -104,7 +104,7 @@
 	<%! String model = null; %>
 	<%
 	String contrName = request.getParameter("contrSelect");
-	model = request.getParameter("modelSelect");
+//	model = request.getParameter("modelSelect");
 
 	int newContrFlag = 0;
 	if (request.getParameter("nextBtn") == null) {
@@ -125,12 +125,17 @@
 		return;
 	}
 
-	String dept = null;
+	String dept = "";
 	if (request.getParameter("nextBtn") != null) {
 		model = request.getParameter("modelSelect");
-		for (deptRecord r : deptList) {
-			if (model.equals(r.get_modelName())) {
-				dept = r.get_deptName();
+		out.println("<script type=\"text/javascript\">");
+		out.println("alert('first model is " + model + "');");
+		out.println("</script>");
+		if (model != null) {
+			for (deptRecord r : deptList) {
+				if (model.equals(r.get_modelName())) {
+					dept = r.get_deptName();
+				}
 			}
 		}
 //		session.setAttribute("shipmodel", model);
