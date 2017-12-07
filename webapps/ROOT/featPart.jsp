@@ -74,8 +74,7 @@
         </select>
 </h3>
 </div>
-<br>
-&nbsp;&nbsp;&nbsp;
+<br><br><br><br><br>
 
 <div style='width:25%;float:left'>
 <h3>Feature 5:
