@@ -104,7 +104,7 @@
 	<%! String model = null; %>
 	<%
 	String contrName = request.getParameter("contrSelect");
-//	model = request.getParameter("modelSelect");
+	model = request.getParameter("modelSelect");
 
 	int newContrFlag = 0;
 	if (request.getParameter("nextBtn") == null) {

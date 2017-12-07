@@ -538,8 +538,8 @@ public class DBController {
 		String listCustQueryStr = ""
 								+ "SELECT custNo "
 								+ "FROM yuanma.Customer "
-								+ "WHERE yuanma.Customer.firstName='" + fn + "'"
-								+ "AND yuanma.Customer.lastName='" + ln + "'"
+								+ "WHERE yuanma.Customer.firstName='" + fn + "' "
+								+ "AND yuanma.Customer.lastName='" + ln + "' "
 								+ "AND yuanma.Customer.email='" + em + "'";
 		try {
 			ResultSet rs = stmt.executeQuery(listCustQueryStr);
@@ -1049,7 +1049,7 @@ public class DBController {
 public  String show_all_features(String deptName) {
 	ArrayList<FeatureRecord> feat_list = new ArrayList<FeatureRecord>();
 	String listAllDeptQueryStr = "SELECT ft.deptName, pt.partName, pt.price " +
-								 "From yuanma.Feature ft, yuanma.Part pt" +
+								 "From yuanma.Feature ft, yuanma.Part pt " +
 								 "WHERE ft.deptName ='" + deptName + "' AND " +
 								 "ft.partNo = pt.partNo";
 	System.out.println("deptName is " + deptName + "\n");
@@ -1057,9 +1057,9 @@ public  String show_all_features(String deptName) {
 	try {
 		ResultSet rs = stmt.executeQuery(listAllDeptQueryStr);
 		while(rs.next()){
-			String dptN = rs.getString("deptName");
-			String prtN = rs.getString("partName");
-			int prc = rs.getInt("price");
+			String dptN = rs.getString(1);
+			String prtN = rs.getString(2);
+			int prc = rs.getInt(3);
 			feat_list.add(new FeatureRecord(dptN, prtN, prc));
 		}
 		rs.close();
