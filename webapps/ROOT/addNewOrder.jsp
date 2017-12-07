@@ -95,19 +95,18 @@
 				&nbsp;&nbsp;&nbsp;
 
 				<%
-					if (request.getParameter("modelSelect") == null) {
-						out.println("<script type=\"text/javascript\">");
-						out.println("alert('Please choose a Model to proceed the order!');");
-						out.println("location='customerPage.jsp';");
-						out.println("</script>");
-						return;
-					} else {
+					if (request.getParameter("modelSelect") != null) {
 						dbc.connect();
 						String model = request.getParameter("modelSelect");
 						ArrayList<FeatureRecord> featList = dbc.show_all_features(model);
+					} else {
+						out.println("<script type=\"text/javascript\">");
+						out.println("alert('Please choose a Model to proceed the order!');");
+						out.println("location='addNewOrder.jsp';");
+						out.println("</script>");
+						return;
 					}
 				%>
-
 				<h3>Feature 1:
 				      <select size="1"
 				              class="bloc" name="feat1Select" id="feat1Select"
@@ -157,6 +156,7 @@
 	</div>
 
 	<%
+
 	if (request.getParameter("viewBtn") == null){
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('Please choose a Model to proceed the order!');");
