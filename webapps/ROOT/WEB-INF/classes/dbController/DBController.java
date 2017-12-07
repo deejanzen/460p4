@@ -1017,6 +1017,33 @@ public class DBController {
 		return null;
 		
 	}
+	
+	public ArrayList<deptRecord> show_most_popular_dept() {
+		ArrayList<deptRecord> dept_list = new ArrayList<deptRecord>();
+		
+		String listPopularDeptQueryStr = ""
+										+ "SELECT yuanma.Department.deptName, yuanma.Department.model, COUNT(yuanma.ContractOrder.orderNo) as activeOrderCount "
+										+ "FROM (yuanma.Department "
+										+ "LEFT JOIN yuanma.ContractOrder "
+										+ "ON yuanma.Department.deptName=yuanma.ContractOrder.deptName) "
+										+ "WHERE yuanma.ContractOrder.status='Active' "
+										+ "GROUP BY yuanma.Department.deptName, yuanma.Department.model "
+										+ "ORDER BY activeOrderCount DESC";
+	
+		try {
+			ResultSet rs = stmt.executeQuery(listPopularDeptQueryStr);
+			while(rs.next()){
+				dept_list.add(new deptRecord(rs.getString(1), rs.getString(2), rs.getInt(3)));
+			}
+			rs.close();
+			return dept_list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;		
+	}
 
 }
 	
