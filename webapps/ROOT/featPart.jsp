@@ -64,8 +64,63 @@
              }
          %>
         </select>
+</h3><br>
+<h3>Feature 5:
+        <select size="1"
+               class="bloc" name="feat2Select" id="feat2Select"
+               onfocus='this.size=5;' onblur='this.size=1;'>
+         <%
+             if (featList != null && featList.size() > 0) {
+                 for (int i = 3; i < featList.size(); i++) {
+                     String partName = featList.get(i).get_partNum();
+                     out.write("<option value=" + partName + " >" + partName + "</option>");
+                 }
+             }
+         %>
+        </select>
+</h3><br>
+<h3>Feature 6:
+        <select size="1"
+               class="bloc" name="feat2Select" id="feat2Select"
+               onfocus='this.size=5;' onblur='this.size=1;'>
+         <%
+             if (featList != null && featList.size() > 0) {
+                 for (int i = 3; i < featList.size(); i++) {
+                     String partName = featList.get(i).get_partNum();
+                     out.write("<option value=" + partName + " >" + partName + "</option>");
+                 }
+             }
+         %>
+        </select>
+</h3><br>
+<h3>Feature 7:
+        <select size="1"
+               class="bloc" name="feat2Select" id="feat2Select"
+               onfocus='this.size=5;' onblur='this.size=1;'>
+         <%
+             if (featList != null && featList.size() > 0) {
+                 for (int i = 3; i < featList.size(); i++) {
+                     String partName = featList.get(i).get_partNum();
+                     out.write("<option value=" + partName + " >" + partName + "</option>");
+                 }
+             }
+         %>
+        </select>
+</h3><br>
+<h3>Feature 8:
+        <select size="1"
+               class="bloc" name="feat2Select" id="feat2Select"
+               onfocus='this.size=5;' onblur='this.size=1;'>
+         <%
+             if (featList != null && featList.size() > 0) {
+                 for (int i = 3; i < featList.size(); i++) {
+                     String partName = featList.get(i).get_partNum();
+                     out.write("<option value=" + partName + " >" + partName + "</option>");
+                 }
+             }
+         %>
+        </select>
 </h3>
-
 </fieldset>
 
 
