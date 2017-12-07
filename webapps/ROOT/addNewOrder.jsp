@@ -127,7 +127,7 @@
 
 	String dept = "";
 	if (request.getParameter("nextBtn") != null) {
-		model = request.getParameter("modelSelect");
+//		model = request.getParameter("modelSelect");
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('first model is " + model + "');");
 		out.println("</script>");

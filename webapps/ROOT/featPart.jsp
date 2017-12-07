@@ -7,7 +7,11 @@
             out.println("alert(' dept is " + dept + "');");
             out.println("</script>");
             dbc.connect();
-            featList = dbc.show_all_features(dept);
+// featList
+            String s = dbc.show_all_features(dept);
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert(' the query is " + s + "');");
+            out.println("</script>");
 
             if (featList != null && featList.size() > 0) {
                 for (int i = 0; i < featList.size(); i++) {
