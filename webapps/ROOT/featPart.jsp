@@ -64,7 +64,7 @@
              }
          %>
         </select>
-</h3><br>
+</h3>
 <h3>Feature 5:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -78,7 +78,7 @@
              }
          %>
         </select>
-</h3><br>
+</h3>
 <h3>Feature 6:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -92,7 +92,7 @@
              }
          %>
         </select>
-</h3><br>
+</h3>
 <h3>Feature 7:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -106,7 +106,7 @@
              }
          %>
         </select>
-</h3><br>
+</h3>
 <h3>Feature 8:
         <select size="1"
                class="bloc" name="feat2Select" id="feat2Select"
@@ -122,12 +122,18 @@
         </select>
 </h3>
 </fieldset>
-
+<br>
+<button type="submit" id="viewBtn" name="viewBtn"> View The Receipt And Submit</button>
 
 <br>
 </form>
 </center>
 </div>
+
+<%
+
+%>
+
 
 </body>
 
