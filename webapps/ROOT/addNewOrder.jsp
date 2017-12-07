@@ -41,6 +41,7 @@
 
 		%>
 		</h3>
+		<%! DBController dbc = null; %>
 		<form action="addNewOrder.jsp" method="post">
 			<fieldset id = "field1">
 				<legend>Enter Information:</legend>
@@ -51,7 +52,7 @@
 							  onfocus='this.size=5;' onblur='this.size=1;'>
 						<option value="newContract">New Contract</option>;
 						<%
-							DBController dbc = new DBController();
+							dbc = new DBController();
 							dbc.connect();
 
 							ArrayList<contractRecord> contrList = dbc.show_all_contractByCustID(custID);
@@ -70,6 +71,7 @@
 
 				&nbsp;&nbsp;&nbsp;
 
+				<%! ArrayList<FeatureRecord> featList = null; %>
 				<h3>Select a model:
 					  <select size="1"
 							  class="bloc" name="modelSelect" id="modelSelect"
@@ -90,85 +92,24 @@
 						%>
 					   </select>
 				</h3>
-				<button type="submit" id="nextBtn" name="nextBtn">Select Model</button>
+				<button type="submit" id="nextBtn" name="nextBtn">See available features</button>
+				<br>
+				<button type="button" onclick="window.location.href='customerPage.jsp'">Go Back</button>
+
 
 				&nbsp;&nbsp;&nbsp;
 
-				<%
-					if (request.getParameter("modelSelect") != null) {
-						dbc.connect();
-						String model = request.getParameter("modelSelect");
-						ArrayList<FeatureRecord> featList = dbc.show_all_features(model);
-					} else {
-						out.println("<script type=\"text/javascript\">");
-						out.println("alert('Please choose a Model to proceed the order!');");
-						out.println("location='addNewOrder.jsp';");
-						out.println("</script>");
-						return;
-					}
-				%>
-				<h3>Feature 1:
-				      <select size="1"
-				              class="bloc" name="feat1Select" id="feat1Select"
-				              onfocus='this.size=5;' onblur='this.size=1;'>
-				        <%
-				            dbc.connect();
-							String model = request.getParameter("modelSelect");
-				            ArrayList<FeatureRecord> featList = dbc.show_all_features(model);
-
-				            if (featList != null && featList.size() > 0) {
-				                for (int i = 0; i < featList.size(); i++) {
-				                    String partName = featList.get(i).get_partNum();
-				                    out.write("<option value=" + partName + " >" + partName + "</option>");
-				                }
-				            }
-
-				            dbc.disconnect();
-				        %>
-				       </select>
-				</h3>
-				<br><br>
-				<h3>Feature 2:
-				        <select size="1"
-				               class="bloc" name="feat2Select" id="feat2Select"
-				               onfocus='this.size=5;' onblur='this.size=1;'>
-				         <%
-				             if (featList != null && featList.size() > 0) {
-				                 for (int i = 0; i < featList.size(); i++) {
-				                     String partName = featList.get(i).get_partNum();
-				                     out.write("<option value=" + partName + " >" + partName + "</option>");
-				                 }
-							 }
-				         %>
-				        </select>
-				</h3>
-
 				<br>
 
-			</fieldset>
-
-
-			<br>
-			<button type="submit" id="viewBtn" name="viewBtn">Place Order</button>
-			<button type="button" onclick="window.location.href='startpage.jsp'">Go Back</button>
-		</form>
-	</center>
-	</div>
-
+	<%! String model = null; %>
 	<%
-
-	if (request.getParameter("viewBtn") == null){
-		out.println("<script type=\"text/javascript\">");
-		out.println("alert('Please choose a Model to proceed the order!');");
-		out.println("location='customerPage.jsp';");
-		out.println("</script>");
-		return;
-	}
-
 	String contrName = request.getParameter("contrSelect");
-	String shipName = request.getParameter("modelSelect");
+	model = request.getParameter("modelSelect");
 
 	int newContrFlag = 0;
+	if (request.getParameter("nextBtn") == null) {
+		return;
+	}
 
 	if (contrName.equals("newContract")) {
 		dbc.connect();
@@ -177,79 +118,26 @@
 		dbc.disconnect();
 	}
 
-	if (shipName == null){
+	if (model == null){
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('Please Select A Ship Model To Make An Order');");
 		out.println("</script>");
 		return;
 	}
 
-	if (request.getParameter("viewBtn") != null){
-
-		int totalPrice = 0;
-
-		dbc.connect();
-		int basePrice = dbc.getBasePriceByName(shipName);
-		String orderID = dbc.orderIDGenerator();
-		dbc.disconnect();
-
-		String receiptContent = "";
-
-		receiptContent += "Receipt\\n";
-		receiptContent += ("Contract ID: " + contrName + "\\n");
-		receiptContent += ("Customer ID: " + custID + "\\n");
-		receiptContent += ("Order ID: " + orderID + "\\n");
-		receiptContent += ("Ship Model: " + shipName + "\\n");
-		receiptContent += ("Ship Model Base Price: " + basePrice + "\\n");
-
-		dbc.connect();
-		ArrayList<partRecord> partList = dbc.show_all_part_byModelName(shipName);
-		dbc.disconnect();
-
-		if (partList != null && partList.size() > 0) {
-			for (int i = 0; i < partList.size(); i++) {
-				String part_name = partList.get(i).get_partName();
-				int part_price = partList.get(i).get_partPrice();
-				totalPrice += part_price;
-				receiptContent += ("     " + i + ". PartName: " + part_name + "----------PartPrice: " + part_price + "\\n");
-			}
-		}
-
-		totalPrice += basePrice;
-
-		receiptContent += ("Total Price: " + totalPrice + "\\n");
-
-		//out.println("<script type=\"text/javascript\">");
-		//out.println("alert('" + receiptContent + "');");
-		//out.println("</script>");
-
-		if (newContrFlag == 1) {
-
-			dbc.connect();
-			dbc.addNewContract(contrName, custID);
-			dbc.disconnect();
-
-			//out.println("<script type=\"text/javascript\">");
-			//out.println("alert('Add New Contract');");
-			//out.println("</script>");
-
-		}
-
-		dbc.connect();
-		dbc.addNewContractOrder(orderID, contrName, shipName);
-		dbc.addNewBuildDefault(orderID, partList);
-		dbc.disconnect();
-
-		out.println("<script type=\"text/javascript\">");
-		out.println("alert('" + receiptContent + "');");
-		out.println("location='customerPage.jsp';");
-		out.println("</script>");
+	if (request.getParameter("nextBtn") != null) {
+		model = request.getParameter("modelSelect");
+		session.setAttribute("shipmodel", model);
+//		response.sendRedirect("featPart.jsp");
 	}
 
-
-
 	%>
-</body>
 
-
-</html>
+	<c:choose>
+        <c:when test="${empty model}">
+            <%@ include file="addNewOrderBase.jsp" %>
+        </c:when>
+        <c:otherwise>
+            <%@ include file="featPart.jsp" %>
+        </c:otherwise>
+    </c:choose>

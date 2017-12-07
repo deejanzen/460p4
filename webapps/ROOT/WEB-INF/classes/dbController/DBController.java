@@ -1049,7 +1049,7 @@ public class DBController {
 public ArrayList<FeatureRecord> show_all_features(String deptName) {
 	ArrayList<FeatureRecord> feat_list = new ArrayList<FeatureRecord>();
 	String listAllDeptQueryStr = "SELECT ft.deptName, pt.partName, pt.price " +
-								 "From yuanma.Feature ft yuanma.Part pt" +
+								 "From yuanma.Feature ft, yuanma.Part pt" +
 								 "WHERE ft.deptName ='" + deptName + "' AND " +
 								 "ft.partNo = pt.partNo";
 	try {

@@ -31,13 +31,13 @@
 	<div id="loginbox">
 		<form action="custLogin.jsp" method="post">
 			FirstName <input type="text" id="fname" value="" name="fname">
-			<br>
-			LastName <input type="text" id="lname" value="" name="lname">
-			<br>
-			Email <input type="text" id="email" value="" name="email">
-			<br>
-			<button type="submit" value="submitBtn" name="submitBtn"> Login</button>
 			<br><br>
+			LastName <input type="text" id="lname" value="" name="lname">
+			<br><br>
+			Email <input type="text" id="email" value="" name="email">
+			<br><br>
+			<button type="submit" value="submitBtn" name="submitBtn"> Login</button>
+			<br>
 			<button type="button" onclick="window.location.href='startpage.jsp'">Home</button>
 		</form>
 	</div>
