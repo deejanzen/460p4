@@ -29,21 +29,21 @@
 	<div id="addNewOrderBox">
 
 	<center>
-		<h2>Query Question #1</h2>
+		<h2>Query Question #5</h2>
 		<br>
-		<h3> Choosing one from a list of ship types, report the cost of all the parts
+		<h3> Choosing A Department To See The Total Revenue
 		<%
 			request.setCharacterEncoding("utf-8");
 			response.setContentType("text/html;charset=utf-8");
 			DBController dbc = new DBController();
 		%>
 		</h3>
-		<form action="query1.jsp" method="post">
+		<form action="query5.jsp" method="post">
 			<fieldset id = "field1">
 				<legend>Enter Information:</legend>								
-				<h3>Choose Ship Type: 
+				<h3>Choose Department: 
 					  <select size="1"
-							  class="bloc" name="shipSelect" id="shipSelect"
+							  class="bloc" name="deptSelect" id="deptSelect"
 							  onfocus='this.size=5;' onblur='this.size=1;'>		
 						<%							
 							dbc.connect();
@@ -52,8 +52,8 @@
 														
 							if (deptList != null && deptList.size() > 0) {
 								for (int i = 0; i < deptList.size(); i++) {
-									String modelName = deptList.get(i).get_modelName();
-									out.write("<option value=" + modelName + " >" + modelName + "</option>");	
+									String deptName = deptList.get(i).get_deptName();
+									out.write("<option value=" + deptName + " >" + deptName + "</option>");	
 								}
 							}							
 
@@ -68,7 +68,7 @@
 			
 			
 			<br>
-			<button type="submit" id="viewBtn" name="viewBtn"> View The Receipt And Submit</button>
+			<button type="submit" id="viewBtn" name="viewBtn"> View The Result</button>
 		</form>
 	</center>
 	</div>
@@ -77,11 +77,11 @@
 		return;
 	}
 
-	String shipName = request.getParameter("shipSelect");
+	String deptName = request.getParameter("deptSelect");
 	
-	if (shipName == null){
+	if (deptName == null){
 		out.println("<script type=\"text/javascript\">");
-		out.println("alert('Please Select A Ship Model To Check The Part Price');");
+		out.println("alert('Please Select A Department To Check Info');");
 		out.println("</script>");
 		return;
 	}
@@ -90,32 +90,18 @@
 		int totalPrice = 0;
 		
 		dbc.connect();
-		int basePrice = dbc.getBasePriceByName(shipName);
+		int totalRevenue = dbc.show_most_rich_dept(deptName);
 		dbc.disconnect();
 		
 		String receiptContent = "";
 		
 		receiptContent += "Receipt\\n";
-		receiptContent += ("Ship Model: " + shipName + "\\n");
-		receiptContent += ("Ship Model Base Price: " + basePrice + "\\n");
-		
-		dbc.connect();
-		ArrayList<partRecord> partList = dbc.show_all_part_byModelName(shipName);
-		dbc.disconnect();
+		receiptContent += ("Department Name: " + deptName + "\\n");
 					
-		if (partList != null && partList.size() > 0) {
-			for (int i = 0; i < partList.size(); i++) {
-				String part_name = partList.get(i).get_partName();
-				int part_price = partList.get(i).get_partPrice();					
-				totalPrice += part_price;					
-				receiptContent += ("     " + i + ". PartName: " + part_name + "----------PartPrice: " + part_price + "\\n");
-			}
-		}					
-		totalPrice += basePrice;
-		receiptContent += ("Total Price: " + totalPrice + "\\n");						
+		receiptContent += ("Total Revenue: " + totalRevenue + "\\n");						
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('" + receiptContent + "');");
-		out.println("location='query1.jsp';");
+		out.println("location='query5.jsp';");
 		out.println("</script>");			
 	}
 	%>

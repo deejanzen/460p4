@@ -1045,5 +1045,31 @@ public class DBController {
 		return null;		
 	}
 
+	public int show_most_rich_dept(String deptName) {
+		
+		String listPopularDeptQueryStr = ""
+										+ "SELECT subq2.deptName, sum(subq2.totalCost) as totalProductValue "
+										+ "FROM (SELECT yuanma.ContractOrder.deptName, (SUM(yuanma.Part.Price) + yuanma.Department.basePrice) as totalCost "
+										+ "FROM (yuanma.ContractOrder "
+										+ "LEFT JOIN yuanma.Build ON yuanma.ContractOrder.OrderNo=yuanma.Build.OrderNo "
+										+ "LEFT JOIN yuanma.Part ON yuanma.Build.PartNo=yuanma.Part.PartNo "
+										+ "LEFT JOIN yuanma.Department ON yuanma.ContractOrder.DeptName=yuanma.Department.DeptName) "
+										+ "GROUP BY yuanma.ContractOrder.OrderNo, yuanma.Department.basePrice, yuanma.ContractOrder.deptName) subq2 "
+										+ "WHERE subq2.deptName='" + deptName + "' "
+										+ "GROUP BY subq2.deptName";
+	
+		try {
+			ResultSet rs = stmt.executeQuery(listPopularDeptQueryStr);
+			rs.next();
+			int totalRevenue = rs.getInt(2);
+			rs.close();
+			return totalRevenue;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return -1;		
+	}
 }
 	
