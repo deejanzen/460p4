@@ -169,6 +169,11 @@
 
 
 	if (request.getParameter("viewBtn") != null){
+
+        out.println("<script type=\"text/javascript\">");
+		out.println("alert('Please Select A Ship Model To Make An Order');");
+		out.println("</script>");
+
 		int totalPrice = 0;
 
 		dbc.connect();
