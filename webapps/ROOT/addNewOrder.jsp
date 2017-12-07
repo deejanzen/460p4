@@ -152,6 +152,7 @@
 	}
 
 	%>
+	<%@ include file="addNewOrderBase.jsp" %>
 
 	<c:choose>
         <c:when test="${empty model}">
