@@ -100,7 +100,7 @@
 				        <%
 				            dbc.connect();
 							String model = request.getParameter("modelSelect");
-				            ArrayList<deptRecord> featList = dbc.show_all_features(model);
+				            ArrayList<FeatureRecord> featList = dbc.show_all_features(model);
 
 				            if (featList != null && featList.size() > 0) {
 				                for (int i = 0; i < featList.size(); i++) {

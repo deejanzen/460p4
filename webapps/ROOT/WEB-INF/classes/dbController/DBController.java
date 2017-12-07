@@ -1047,7 +1047,7 @@ public class DBController {
 
 // List all of the department in the Department Table
 public ArrayList<FeatureRecord> show_all_features(String deptName) {
-	ArrayList<FeatureRecord> feat_list = new ArrayList<deptRecord>();
+	ArrayList<FeatureRecord> feat_list = new ArrayList<FeatureRecord>();
 	String listAllDeptQueryStr = "SELECT ft.deptName, pt.partName, pt.price " +
 								 "From yuanma.Feature ft yuanma.Part pt" +
 								 "WHERE ft.deptName ='" + deptName + "' AND " +
@@ -1057,7 +1057,8 @@ public ArrayList<FeatureRecord> show_all_features(String deptName) {
 		while(rs.next()){
 			String dptN = rs.getString("deptName");
 			String prtN = rs.getString("partName");
-			feat_list.add(new FeatureRecord(dptN, prtN));
+			int prc = rs.getInt("price");
+			feat_list.add(new FeatureRecord(dptN, prtN, prc));
 		}
 		rs.close();
 		return dept_list;
